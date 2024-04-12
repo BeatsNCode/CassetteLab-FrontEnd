@@ -1,4 +1,4 @@
-import theme from './theme'
+import theme from './theme';
 import { ThemeProvider,  } from '@mui/material/styles';
 import AppBar from './components/shared/NavBar.tsx';
 import { CssBaseline } from '@mui/material';
@@ -11,7 +11,6 @@ function App() {
       <AppBar></AppBar>
       <CssBaseline />
     </ThemeProvider>
-      
     </>
   )
 }
