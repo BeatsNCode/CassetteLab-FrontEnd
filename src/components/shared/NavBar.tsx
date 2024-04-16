@@ -1,12 +1,10 @@
-import * as React from 'react';
+// import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import Container from '@mui/material/Container';
-
-import Tooltip from '@mui/material/Tooltip';
 
 
 function ResponsiveAppBar() {
@@ -19,7 +17,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="#nav"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -39,7 +37,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="#nav"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

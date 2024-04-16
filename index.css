@@ -1,0 +1,10 @@
+body {
+  /* margin: 0; */
+  padding-bottom: 1000px;
+  background-image: url('src/assets/Cassette Lab - Black background.png');
+  background-size: 1000px 1000px;
+  /* background-size: 50%; */
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Add more styles as needed */
+}
