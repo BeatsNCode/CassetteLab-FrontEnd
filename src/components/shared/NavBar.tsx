@@ -58,7 +58,7 @@ function ResponsiveAppBar() {
             CassetteLab
           </Typography>
  
-
+          {/* Hide navlinks if user is logged in*/}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
               size="large"
@@ -95,7 +95,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-
+          {/* Hide navlinks if user is logged in*/}
           <Typography
             variant="h5"
             noWrap
@@ -114,6 +114,8 @@ function ResponsiveAppBar() {
           >
             CassetteLab
           </Typography>
+          
+          {/* Hide navlinks if user is logged in*/}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {navLinks.map((link) => (
               <Button
@@ -125,12 +127,17 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
+          {/* Hide navlinks if user is logged in*/}
           <Box sx={{ flexGrow: 0 }}>
+
+             {/* Only Display settings if user is logged in */}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Name" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
+              {/* Only Display settings if user is logged in */}
+                
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
