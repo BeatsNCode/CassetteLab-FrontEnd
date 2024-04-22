@@ -15,7 +15,7 @@ import Avatar from '@mui/material/Avatar';
 
 function ResponsiveAppBar() {
 
-  const navLinks = ['About', 'Signup', 'Login'];
+  const navLinks = ['About', 'Sign Up', 'Sign In'];
   const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);

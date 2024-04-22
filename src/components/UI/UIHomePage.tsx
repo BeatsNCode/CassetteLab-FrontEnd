@@ -25,7 +25,7 @@ function Homepage() {
             sx={{ border: '2px solid grey', marginTop:'100px' }}
             >
             
-                <p style={{ paddingTop: "auto", margin: "auto" }}>
+                <p style={{ paddingTop: "auto", margin: "auto", textAlign: "center" }}>
                 This paragraph introduces the CassetteLab project
                 and its purpose.<br/><br/>
 
