@@ -15,11 +15,11 @@ import SignIn from './components/UI/signIn.tsx';
         path: '/',
         element: <Homepage />
     }
-  //   },
-  //   {
-  //       path: '/sign-up',
-  //       element: <SignUp />
-  //   },
+    // },
+    // {
+    //     path: '/sign-up',
+    //     element: <SignUp />
+    // }
   //   {
   //       path: 'sign-in',
   //       element: <SignIn />

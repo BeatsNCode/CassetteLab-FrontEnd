@@ -11,6 +11,8 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
+import Link from '@mui/material/Link';
+
 
 
 function ResponsiveAppBar() {
@@ -88,11 +90,14 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {navLinks.map((link) => (
-                <MenuItem key={link} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{link}</Typography>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">
+                    <Link href="#">ABOUT</Link><br/><br/>
+                    <Link href="#">SIGN UP</Link><br/><br/>
+                    <Link href="#">SIGN IN</Link>
+                  </Typography>
                 </MenuItem>
-              ))}
+  
             </Menu>
           </Box>
           {/* Hide navlinks if user is logged in*/}
@@ -117,15 +122,24 @@ function ResponsiveAppBar() {
           
           {/* Hide navlinks if user is logged in*/}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {navLinks.map((link) => (
               <Button
-                key={link}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {link}
+                <Link href="#">ABOUT</Link>
               </Button>
-            ))}
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link href="#">SIGN UP</Link>
+              </Button>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link href="#">SIGN IN</Link>
+              </Button>
           </Box>
           {/* Hide navlinks if user is logged in*/}
           <Box sx={{ flexGrow: 0 }}>
@@ -154,11 +168,15 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">
+                  <Link href="#">Profile</Link><br/><br/>
+                  <Link href="#">Account</Link><br/><br/>
+                  <Link href="#">Dashboard</Link><br/><br/>
+                  <Link href="#">Sign Out</Link>
+                </Typography>
+              </MenuItem>
+
             </Menu>
           </Box>
 
