@@ -17,9 +17,6 @@ import Link from '@mui/material/Link';
 
 function ResponsiveAppBar() {
 
-  const navLinks = ['About', 'Sign Up', 'Sign In'];
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
