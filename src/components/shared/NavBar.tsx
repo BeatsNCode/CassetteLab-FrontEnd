@@ -12,7 +12,8 @@ import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
-
+import { useNavigate } from 'react-router-dom';
+import SignUp from '../UI/signUp.tsx';
 
 
 function ResponsiveAppBar() {
@@ -35,6 +36,8 @@ function ResponsiveAppBar() {
       setAnchorElUser(null);
     };
 
+    const navigate = () => useNavigate()
+
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
@@ -43,7 +46,6 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#nav"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -87,13 +89,13 @@ function ResponsiveAppBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">
-                    <Link href="#">ABOUT</Link><br/><br/>
-                    <Link href="#">SIGN UP</Link><br/><br/>
-                    <Link href="#">SIGN IN</Link>
-                  </Typography>
-                </MenuItem>
+            <MenuItem onClick={handleCloseNavMenu}>
+              <Typography textAlign="center">
+                <Link href={`/about`}>ABOUT</Link><br/><br/>
+                <Link href={`/sign-up`}>SIGN UP</Link><br/><br/>
+                <Link href={`/sign-in`}>SIGN IN</Link>
+              </Typography>
+            </MenuItem>
   
             </Menu>
           </Box>
@@ -102,7 +104,6 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#nav"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -123,19 +124,19 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link href="#">ABOUT</Link>
+                <Link href={`/about`}>ABOUT</Link>
               </Button>
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link href="#">SIGN UP</Link>
+                <Link href={`/sign-up`}>SIGN UP</Link>
               </Button>
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link href="#">SIGN IN</Link>
+                <Link href={`/sign-in`}>SIGN IN</Link>
               </Button>
           </Box>
           {/* Hide navlinks if user is logged in*/}
@@ -167,10 +168,10 @@ function ResponsiveAppBar() {
             >
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center">
-                  <Link href="#">Profile</Link><br/><br/>
-                  <Link href="#">Account</Link><br/><br/>
-                  <Link href="#">Dashboard</Link><br/><br/>
-                  <Link href="#">Sign Out</Link>
+                  <Link href={`/profile`}>Profile</Link><br/><br/>
+                  <Link href={`/account`}>Account</Link><br/><br/>
+                  <Link href={`/dashboard`}>Dashboard</Link><br/><br/>
+                  <Link href={`/sign-out`}>Sign Out</Link>
                 </Typography>
               </MenuItem>
 
