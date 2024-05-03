@@ -13,10 +13,10 @@ import SignIn from './components/UI/signIn.tsx';
         path: '/sign-up',
         element: <SignUp />
     },
-    // {
-    //     path: 'sign-in',
-    //     element: <SignIn />
-    // },
+    {
+        path: 'sign-in',
+        element: <SignIn />
+    },
   ]);
 
 export default router;
