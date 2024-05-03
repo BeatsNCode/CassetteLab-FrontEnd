@@ -12,7 +12,6 @@ import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
-import { useNavigate } from 'react-router-dom';
 import SignUp from '../UI/signUp.tsx';
 
 
@@ -35,8 +34,6 @@ function ResponsiveAppBar() {
     const handleCloseUserMenu = () => {
       setAnchorElUser(null);
     };
-
-    const navigate = () => useNavigate()
 
   return (
     <AppBar position="fixed">

@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { GoogleLogin } from '@react-oauth/google';
+
 
 
 function Copyright(props: any) {
@@ -37,6 +39,7 @@ export default function SignUp() {
 
   return (
       <Container component="main" maxWidth="xs">
+
         <Box
           sx={{
             marginTop: 8,
@@ -51,13 +54,13 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
-                  required
                   fullWidth
                   id="firstName"
                   label="First Name"
@@ -66,7 +69,6 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   fullWidth
                   id="lastName"
                   label="Last Name"
@@ -95,12 +97,6 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -110,6 +106,25 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            <Typography sx={{ padding: 1, textAlign: 'center' }}>OR</Typography>
+            <Box
+              sx={{
+                marginTop: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <GoogleLogin
+                  onSuccess={credentialResponse => {
+                  console.log(credentialResponse);
+                  }}
+                  onError={() => {
+                  console.log('Login Failed');
+                  }}
+                  useOneTap
+              />
+            </Box>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href={`/sign-in`} variant="body2">
