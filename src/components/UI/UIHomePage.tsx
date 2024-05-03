@@ -1,12 +1,5 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import Typography from '@mui/material/Typography';
-// import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-// import Button from '@mui/material/Button';
 
 
 function Homepage() {
