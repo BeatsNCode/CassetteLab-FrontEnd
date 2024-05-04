@@ -9,9 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PasswordChecklist from "react-password-checklist"
@@ -32,7 +30,7 @@ function Copyright(props: any) {
   );
 }
 
-function createAccount(emailAddress, Password, Password2) {
+function createAccount(emailAddress: FormDataEntryValue | null, Password: FormDataEntryValue | null, Password2: FormDataEntryValue | null) {
   return (
     axios({
       method: 'post',
@@ -49,6 +47,9 @@ function createAccount(emailAddress, Password, Password2) {
 
 export default function SignUp() {
 
+  const [email, setEmail] = React.useState("")
+
+  const [isValid, setIsValid] = React.useState(false);
   const [password, setPassword] = React.useState("")
 	const [password2, setPassword2] = React.useState("")
 
@@ -62,13 +63,9 @@ export default function SignUp() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const password = data.get('password');
-    const password2 = data.get('password2');
+    console.log("Form Submitted")
 
-    createAccount(email, password, password2)
-
+  
   };
 
   return (
@@ -99,7 +96,8 @@ export default function SignUp() {
                   fullWidth
                   label="Email Address"
                   name="email"
-                  autoComplete="email"
+                  type="email"
+                  onChange={e => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -151,11 +149,15 @@ export default function SignUp() {
                 minLength={8}
                 value={password}
                 valueAgain={password2}
-                onChange={(isValid) => {}}
+                onChange={(isValid) => {
+                  setIsValid(isValid)
+                }}
               />
             </Grid>
             <Button
               type="submit"
+              disabled={!isValid}
+              onClick={() => createAccount(email, password, password2)}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
