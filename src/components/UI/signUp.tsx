@@ -57,23 +57,14 @@ export default function SignUp() {
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  autoComplete="stage-name"
+                  name="stageName"
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="stageName"
+                  label="Artist/Band Name"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -116,15 +107,15 @@ export default function SignUp() {
               }}
             >
               <GoogleLogin
-                  onSuccess={credentialResponse => {
+                onSuccess={credentialResponse => {
                   console.log(credentialResponse);
-                  }}
-                  onError={() => {
+                }}
+                onError={() => {
                   console.log('Login Failed');
-                  }}
-                  useOneTap
+                }}
               />
             </Box>
+            <br/>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href={`/sign-in`} variant="body2">
