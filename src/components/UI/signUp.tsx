@@ -9,9 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PasswordChecklist from "react-password-checklist"
@@ -32,13 +30,12 @@ function Copyright(props: any) {
   );
 }
 
-function createAccount(userName, emailAddress, Password, Password2) {
+function createAccount(emailAddress: FormDataEntryValue | null, Password: FormDataEntryValue | null, Password2: FormDataEntryValue | null) {
   return (
     axios({
       method: 'post',
       url: 'http://127.0.0.1:8000/dj-rest-auth/registration/',
       data: {
-        username: userName,
         email: emailAddress,
         password1: Password,
         password2: Password2
@@ -50,6 +47,9 @@ function createAccount(userName, emailAddress, Password, Password2) {
 
 export default function SignUp() {
 
+  const [email, setEmail] = React.useState("")
+
+  const [isValid, setIsValid] = React.useState(false);
   const [password, setPassword] = React.useState("")
 	const [password2, setPassword2] = React.useState("")
 
@@ -61,18 +61,11 @@ export default function SignUp() {
     event.preventDefault();
   };
 
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log(data.forEach((x) => console.log(x)));
-    const username = data.get('username');
-    const email = data.get('email');
-    const password = data.get('password');
-    const artist = data.get('stageName');
+    event.preventDefault();
+    console.log("Form Submitted")
 
-    createAccount(username, email, password, password2)
-
+  
   };
 
   return (
@@ -95,25 +88,7 @@ export default function SignUp() {
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <TextField
-                  required
-                  autoComplete="username"
-                  name="username"
-                  fullWidth
-                  label="Username"
-                  autoFocus
-                />
-              </Grid>
               <Grid item xs={12}>
-                <TextField
-                  autoComplete="stage-name"
-                  name="stageName"
-                  fullWidth
-                  id="stageName"
-                  label="Artist/Band Name"
-                  autoFocus
-                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -121,7 +96,8 @@ export default function SignUp() {
                   fullWidth
                   label="Email Address"
                   name="email"
-                  autoComplete="email"
+                  type="email"
+                  onChange={e => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -150,7 +126,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="password"
+                  name="password2"
                   label="Re-enter Password"
                   type={showPassword ? "text" : "password"}
                   onChange={e => setPassword2(e.target.value)}
@@ -173,11 +149,15 @@ export default function SignUp() {
                 minLength={8}
                 value={password}
                 valueAgain={password2}
-                onChange={(isValid) => {}}
+                onChange={(isValid) => {
+                  setIsValid(isValid)
+                }}
               />
             </Grid>
             <Button
               type="submit"
+              disabled={!isValid}
+              onClick={() => createAccount(email, password, password2)}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
