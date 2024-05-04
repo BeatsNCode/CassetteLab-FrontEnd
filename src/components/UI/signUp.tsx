@@ -32,13 +32,12 @@ function Copyright(props: any) {
   );
 }
 
-function createAccount(userName, emailAddress, Password, Password2) {
+function createAccount(emailAddress, Password, Password2) {
   return (
     axios({
       method: 'post',
       url: 'http://127.0.0.1:8000/dj-rest-auth/registration/',
       data: {
-        username: userName,
         email: emailAddress,
         password1: Password,
         password2: Password2
@@ -61,17 +60,14 @@ export default function SignUp() {
     event.preventDefault();
   };
 
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
+    event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data.forEach((x) => console.log(x)));
-    const username = data.get('username');
     const email = data.get('email');
     const password = data.get('password');
-    const artist = data.get('stageName');
+    const password2 = data.get('password2');
 
-    createAccount(username, email, password, password2)
+    createAccount(email, password, password2)
 
   };
 
@@ -95,25 +91,7 @@ export default function SignUp() {
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <TextField
-                  required
-                  autoComplete="username"
-                  name="username"
-                  fullWidth
-                  label="Username"
-                  autoFocus
-                />
-              </Grid>
               <Grid item xs={12}>
-                <TextField
-                  autoComplete="stage-name"
-                  name="stageName"
-                  fullWidth
-                  id="stageName"
-                  label="Artist/Band Name"
-                  autoFocus
-                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -150,7 +128,7 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="password"
+                  name="password2"
                   label="Re-enter Password"
                   type={showPassword ? "text" : "password"}
                   onChange={e => setPassword2(e.target.value)}
