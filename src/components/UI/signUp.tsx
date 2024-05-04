@@ -2,8 +2,6 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -11,7 +9,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import PasswordChecklist from "react-password-checklist"
 
+import axios from 'axios';
 
 
 function Copyright(props: any) {
@@ -27,14 +32,47 @@ function Copyright(props: any) {
   );
 }
 
+function createAccount(userName, emailAddress, Password, Password2) {
+  return (
+    axios({
+      method: 'post',
+      url: 'http://127.0.0.1:8000/dj-rest-auth/registration/',
+      data: {
+        username: userName,
+        email: emailAddress,
+        password1: Password,
+        password2: Password2
+      }
+    })
+
+  );
+}
+
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const [password, setPassword] = React.useState("")
+	const [password2, setPassword2] = React.useState("")
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+  };
+
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    // event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    console.log(data.forEach((x) => console.log(x)));
+    const username = data.get('username');
+    const email = data.get('email');
+    const password = data.get('password');
+    const artist = data.get('stageName');
+
+    createAccount(username, email, password, password2)
+
   };
 
   return (
@@ -57,30 +95,30 @@ export default function SignUp() {
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  required
+                  autoComplete="username"
+                  name="username"
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  label="Username"
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
+                  autoComplete="stage-name"
+                  name="stageName"
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="stageName"
+                  label="Artist/Band Name"
+                  autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
@@ -92,11 +130,51 @@ export default function SignUp() {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                  type={showPassword ? "text" : "password"}
+                  onChange={e => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                  InputProps={{endAdornment:
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    sx={{ display: 'flex'}}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                  
+                  }}
+                />  
               </Grid>
+              <Grid item xs={12} sx={{ paddingBottom: 2}}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Re-enter Password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={e => setPassword2(e.target.value)}
+                  autoComplete="current-password"
+                  InputProps={{endAdornment:
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    sx={{ display: 'flex'}}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                  
+                  }}
+                />  
+              </Grid>
+              <PasswordChecklist
+                rules={["minLength","specialChar","number","capital","match"]}
+                minLength={8}
+                value={password}
+                valueAgain={password2}
+                onChange={(isValid) => {}}
+              />
             </Grid>
             <Button
               type="submit"
@@ -116,15 +194,15 @@ export default function SignUp() {
               }}
             >
               <GoogleLogin
-                  onSuccess={credentialResponse => {
+                onSuccess={credentialResponse => {
                   console.log(credentialResponse);
-                  }}
-                  onError={() => {
+                }}
+                onError={() => {
                   console.log('Login Failed');
-                  }}
-                  useOneTap
+                }}
               />
             </Box>
+            <br/>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href={`/sign-in`} variant="body2">
