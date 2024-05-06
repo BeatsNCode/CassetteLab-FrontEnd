@@ -13,7 +13,6 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PasswordChecklist from "react-password-checklist"
-
 import axios from 'axios';
 
 
@@ -41,7 +40,6 @@ function createAccount(emailAddress: FormDataEntryValue | null, Password: FormDa
         password2: Password2
       }
     })
-
   );
 }
 
@@ -63,7 +61,9 @@ export default function SignUp() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Form Submitted")
+
+    createAccount(email, password, password2)
+
 
   
   };
@@ -157,10 +157,10 @@ export default function SignUp() {
             <Button
               type="submit"
               disabled={!isValid}
-              onClick={() => createAccount(email, password, password2)}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              href={`/account`}
             >
               Sign Up
             </Button>
