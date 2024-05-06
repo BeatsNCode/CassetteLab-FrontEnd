@@ -12,7 +12,9 @@ import { GoogleLogin } from '@react-oauth/google';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import PasswordChecklist from "react-password-checklist"
+import PasswordChecklist from "react-password-checklist";
+import { useNavigate } from "react-router-dom";
+
 import axios from 'axios';
 
 
@@ -44,9 +46,8 @@ function createAccount(emailAddress: FormDataEntryValue | null, Password: FormDa
 }
 
 export default function SignUp() {
-
   const [email, setEmail] = React.useState("")
-
+  const navigate = useNavigate();
   const [isValid, setIsValid] = React.useState(false);
   const [password, setPassword] = React.useState("")
 	const [password2, setPassword2] = React.useState("")
@@ -62,10 +63,11 @@ export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    createAccount(email, password, password2)
+    createAccount(email, password, password2);
+
+    navigate('/account')
 
 
-  
   };
 
   return (
@@ -160,7 +162,6 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              href={`/account`}
             >
               Sign Up
             </Button>
