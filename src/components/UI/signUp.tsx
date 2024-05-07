@@ -67,9 +67,8 @@ export default function SignUp() {
     Update messaging on signup form */    
     createAccount(email, password, password2)
     .then(() => navigate('/sign-in'))
-    .catch((error) => console.log(error,"Could not create account"));
+    .catch(() => alert("Could not create account"));
     
-
   };
 
   return (
