@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -25,7 +26,7 @@ function Copyright(props: any) {
   );
 }
 
-function signIn(emailAddress: FormDataEntryValue | null, Password: FormDataEntryValue | null) {
+function login(emailAddress: FormDataEntryValue | null, Password: FormDataEntryValue | null) {
   return (
     axios({
       method: 'post',
@@ -34,22 +35,27 @@ function signIn(emailAddress: FormDataEntryValue | null, Password: FormDataEntry
         email: emailAddress,
         password: Password
       }
-    }).then((data) => {
-      const JWT = data.data.access
-      console.log(JWT)
-
     })
   );
 }
 
 export default function SignIn() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const password = data.get('password');
 
-    signIn(email, password)
+    login(email, password)
+    .then((data) => {
+      const JWT = data.data.access
+      console.log(JWT)
+      navigate("/account")
+      return JWT
+    })
+
 
   };
 
