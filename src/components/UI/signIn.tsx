@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 function Copyright(props: any) {
   return (
@@ -24,14 +25,32 @@ function Copyright(props: any) {
   );
 }
 
+function signIn(emailAddress: FormDataEntryValue | null, Password: FormDataEntryValue | null) {
+  return (
+    axios({
+      method: 'post',
+      url: 'http://127.0.0.1:8000/dj-rest-auth/login/',
+      data: {
+        email: emailAddress,
+        password: Password
+      }
+    }).then((data) => {
+      const JWT = data.data.access
+      console.log(JWT)
+
+    })
+  );
+}
+
 export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const email = data.get('email');
+    const password = data.get('password');
+
+    signIn(email, password)
+
   };
 
   return (

@@ -14,7 +14,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PasswordChecklist from "react-password-checklist";
 import { useNavigate } from "react-router-dom";
-
 import axios from 'axios';
 
 
@@ -45,6 +44,7 @@ function createAccount(emailAddress: FormDataEntryValue | null, Password: FormDa
   );
 }
 
+
 export default function SignUp() {
   const [email, setEmail] = React.useState("")
   const navigate = useNavigate();
@@ -63,10 +63,12 @@ export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    createAccount(email, password, password2);
-
-    navigate('/account')
-
+    /* If account cannot be created,
+    Update messaging on signup form */    
+    createAccount(email, password, password2)
+    .then(() => navigate('/sign-in'))
+    .catch((error) => console.log(error,"Could not create account"));
+    
 
   };
 
