@@ -16,7 +16,6 @@ import PasswordChecklist from "react-password-checklist";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -30,17 +29,21 @@ function Copyright(props: any) {
   );
 }
 
-function createAccount(emailAddress: FormDataEntryValue | null, Password: FormDataEntryValue | null, Password2: FormDataEntryValue | null) {
+
+function createAccount(emailAddress: FormDataEntryValue | null, password: FormDataEntryValue | null, password2: FormDataEntryValue | null ) {
   return (
+
+    
     axios({
       method: 'post',
       url: 'http://127.0.0.1:8000/dj-rest-auth/registration/',
       data: {
         email: emailAddress,
-        password1: Password,
-        password2: Password2
+        password1: password,
+        password2: password2
       }
     })
+    
   );
 }
 
@@ -51,18 +54,15 @@ export default function SignUp() {
   const [isValid, setIsValid] = React.useState(false);
   const [password, setPassword] = React.useState("")
 	const [password2, setPassword2] = React.useState("")
-
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+  
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     /* If account cannot be created,
     Update messaging on signup form */    
     createAccount(email, password, password2)

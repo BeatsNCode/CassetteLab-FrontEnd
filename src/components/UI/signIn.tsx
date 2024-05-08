@@ -7,6 +7,9 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
@@ -41,6 +44,12 @@ function login(emailAddress: FormDataEntryValue | null, Password: FormDataEntryV
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -91,11 +100,22 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
+              type={showPassword ? "text" : "password"}
               name="password"
               label="Password"
-              type="password"
               id="password"
               autoComplete="current-password"
+              InputProps={{endAdornment:
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  sx={{ display: 'flex'}}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+                
+              }}
             />
             <Button
               type="submit"
