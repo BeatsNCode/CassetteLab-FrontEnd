@@ -21,6 +21,7 @@
     "@types/node": "^20.12.8",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
+    "bcryptjs-react": "^2.4.6",
     "dotenv": "^16.4.5",
     "env-cmd": "^10.1.0",
     "react": "^18.2.0",

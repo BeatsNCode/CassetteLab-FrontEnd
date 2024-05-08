@@ -1,9 +1,9 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs-react';
 
 
-export default function hashPassword(password: string) {
+export default function hashPassword(password: FormDataEntryValue | null) {
 
-    const salt = bcrypt.genSaltSync(10);
+    const salt = bcrypt.genSaltSync(0);
 
     return bcrypt.hashSync(`${password}`, salt);
 
