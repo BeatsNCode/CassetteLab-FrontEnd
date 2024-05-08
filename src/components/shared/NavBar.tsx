@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
-import SignUp from '../UI/signUp.tsx';
+import SignUp from '../UI/Auth/signUp.tsx';
 
 
 function ResponsiveAppBar() {
