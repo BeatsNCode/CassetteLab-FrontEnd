@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Homepage from './components/UI/UIHomePage.tsx';
-import SignUp from './components/UI/signUp.tsx';
-import SignIn from './components/UI/signIn.tsx';
+import SignUp from './components/UI/Auth/signUp.tsx';
+import SignIn from './components/UI/Auth/signIn.tsx';
 import AccountHomePage from './components/UI/accountPage.tsx';
 
 
