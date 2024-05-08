@@ -15,7 +15,6 @@ import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import hashPassword from '../../hashPassword';
 
 function Copyright(props: any) {
   return (
@@ -58,7 +57,7 @@ export default function SignIn() {
     const email = data.get('email');
     const password = data.get('password');
 
-    login(email, hashPassword(password))
+    login(email, password)
     .then((data) => {
       const JWT = data.data.access
       console.log(JWT)

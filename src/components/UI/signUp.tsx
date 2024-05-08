@@ -15,7 +15,6 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PasswordChecklist from "react-password-checklist";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import hashPassword from '../../hashPassword';
 
 function Copyright(props: any) {
   return (
@@ -31,8 +30,7 @@ function Copyright(props: any) {
 }
 
 
-
-function createAccount(emailAddress: FormDataEntryValue | null, Password: FormDataEntryValue | null) {
+function createAccount(emailAddress: FormDataEntryValue | null, password: FormDataEntryValue | null, password2: FormDataEntryValue | null ) {
   return (
 
     
@@ -41,8 +39,8 @@ function createAccount(emailAddress: FormDataEntryValue | null, Password: FormDa
       url: 'http://127.0.0.1:8000/dj-rest-auth/registration/',
       data: {
         email: emailAddress,
-        password1: Password,
-        password2: Password
+        password1: password,
+        password2: password2
       }
     })
     
@@ -67,7 +65,7 @@ export default function SignUp() {
     event.preventDefault();
     /* If account cannot be created,
     Update messaging on signup form */    
-    createAccount(email, hashPassword(password))
+    createAccount(email, password, password2)
     .then(() => navigate('/sign-in'))
     .catch(() => alert("Could not create account"));
     
