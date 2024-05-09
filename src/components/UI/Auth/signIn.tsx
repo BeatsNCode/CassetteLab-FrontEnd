@@ -62,7 +62,6 @@ export default function SignIn() {
     login(email, password)
     .then((response: any) => {
 
-      const accessToken = response.data.access;
       const user = response.data.user;
       console.log(user, "user authenticated")
     
