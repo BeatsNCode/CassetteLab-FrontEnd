@@ -15,6 +15,8 @@ import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 
 function Copyright(props: any) {
   return (
@@ -32,8 +34,8 @@ function Copyright(props: any) {
 function login(emailAddress: FormDataEntryValue | null, Password: FormDataEntryValue | null) {
   return (
     axios({
-      method: 'post',
-      url: 'http://127.0.0.1:8000/dj-rest-auth/login/',
+      method: "post",
+      url: "http://127.0.0.1:8000/dj-rest-auth/login/",
       data: {
         email: emailAddress,
         password: Password
@@ -58,11 +60,13 @@ export default function SignIn() {
     const password = data.get('password');
 
     login(email, password)
-    .then((data) => {
-      const JWT = data.data.access
-      console.log(JWT)
-      navigate("/account")
-      return JWT
+    .then((response: any) => {
+
+      const accessToken = response.data.access;
+      const user = response.data.user;
+      console.log(user, "user authenticated")
+    
+      navigate("/account")    
     })
 
 
