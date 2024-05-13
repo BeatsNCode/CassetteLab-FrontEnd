@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
-import { AuthUser, UserContext } from '../../Contexts/userContext';
+import { UserContext } from '../../Contexts/userContext';
 
 function ResponsiveAppBar() {
 
@@ -35,7 +35,8 @@ function ResponsiveAppBar() {
     };
 
     const userContext = React.useContext(UserContext);
-    console.log(userContext)
+    const user = userContext.user;
+
 
   return (
     <AppBar position="fixed">
@@ -58,47 +59,49 @@ function ResponsiveAppBar() {
             CassetteLab
           </Typography>
  
-          {/* Hide navlinks if user is logged in*/}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-          <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-            <MenuItem onClick={handleCloseNavMenu}>
-              <Typography textAlign="center">
-                <Link href={`/about`}>ABOUT</Link><br/><br/>
-                <Link href={`/sign-up`}>SIGN UP</Link><br/><br/>
-                <Link href={`/sign-in`}>SIGN IN</Link>
-              </Typography>
-            </MenuItem>
+          {!user && (
+            <React.Fragment>
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', md: 'none' },
+                  }}
+                >
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">
+                    <Link href={`/about`}>ABOUT</Link><br/><br/>
+                    <Link href={`/sign-up`}>SIGN UP</Link><br/><br/>
+                    <Link href={`/sign-in`}>SIGN IN</Link>
+                  </Typography>
+                </MenuItem>
+                </Menu>
+              </Box>
+            </React.Fragment>
+          )}
   
-            </Menu>
-          </Box>
-          {/* Hide navlinks if user is logged in*/}
           <Typography
             variant="h5"
             noWrap
@@ -117,65 +120,69 @@ function ResponsiveAppBar() {
             CassetteLab
           </Typography>
           
-          {/* Hide navlinks if user is logged in*/}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <Link href={`/about`}>ABOUT</Link>
-              </Button>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <Link href={`/sign-up`}>SIGN UP</Link>
-              </Button>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <Link href={`/sign-in`}>SIGN IN</Link>
-              </Button>
-          </Box>
-          {/* Hide navlinks if user is logged in*/}
-          <Box sx={{ flexGrow: 0 }}>
+          {!user && (
+            <React.Fragment>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  <Link href={`/about`}>ABOUT</Link>
+                </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  <Link href={`/sign-up`}>SIGN UP</Link>
+                </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  <Link href={`/sign-in`}>SIGN IN</Link>
+                </Button>
+              </Box>
+            </React.Fragment>
+          )}
 
-             {/* Only Display settings if user is logged in */}
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Name" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-              {/* Only Display settings if user is logged in */}
+          {user && (
+            <React.Fragment>
+              <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Name" src="/static/images/avatar/2.jpg" />
+                  </IconButton>
+                </Tooltip>
                 
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">
-                  <Link href={`/profile`}>Profile</Link><br/><br/>
-                  <Link href={`/account`}>Account</Link><br/><br/>
-                  <Link href={`/dashboard`}>Dashboard</Link><br/><br/>
-                  <Link href={`/sign-out`}>Sign Out</Link>
-                </Typography>
-              </MenuItem>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">
+                      <Link href={`/profile`}>Profile</Link><br/><br/>
+                      <Link href={`/account`}>Account</Link><br/><br/>
+                      <Link href={`/dashboard`}>Dashboard</Link><br/><br/>
+                      <Link href={`/sign-out`}>Sign Out</Link>
+                    </Typography>
+                  </MenuItem>
 
-            </Menu>
-          </Box>
+                </Menu>
+              </Box>
+            </React.Fragment>
+          )}
 
         </Toolbar>
       </Container>
