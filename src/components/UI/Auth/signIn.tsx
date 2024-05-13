@@ -15,8 +15,7 @@ import Container from '@mui/material/Container';
 import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-
+import { UserContext } from '../../../Contexts/userContext';
 
 function Copyright(props: any) {
   return (
@@ -44,15 +43,16 @@ function login(emailAddress: FormDataEntryValue | null, Password: FormDataEntryV
   );
 }
 
+
 export default function SignIn() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-
+  const userContext = React.useContext(UserContext);
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -60,12 +60,27 @@ export default function SignIn() {
     const password = data.get('password');
 
     login(email, password)
-    .then((response: any) => {
+    .then((response) => {
+      console.log(response)
 
-      const user = response.data.user;
-      console.log(user, "user authenticated")
-    
-      navigate("/account")    
+      if (response.status === 200) {
+
+        console.log("Successful Log in")
+
+        const user = response.data.user;
+        userContext.setUser({
+          id: user.pk
+        })
+
+        navigate("/account")
+
+      } else {
+
+        alert("Could not sign you in")
+        
+      }
+
+
     })
 
 
@@ -149,7 +164,7 @@ export default function SignIn() {
             <br/>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href={`/password-reset`} variant="body2">
                   Forgot password?
                 </Link>
               </Grid>

@@ -12,8 +12,7 @@ import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
-import SignUp from '../UI/Auth/signUp.tsx';
-
+import { AuthUser, UserContext } from '../../Contexts/userContext';
 
 function ResponsiveAppBar() {
 
@@ -34,6 +33,9 @@ function ResponsiveAppBar() {
     const handleCloseUserMenu = () => {
       setAnchorElUser(null);
     };
+
+    const userContext = React.useContext(UserContext);
+    console.log(userContext)
 
   return (
     <AppBar position="fixed">
