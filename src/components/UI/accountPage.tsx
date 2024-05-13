@@ -1,13 +1,7 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-function logMessage() {
-    return (
-        console.log("session started")
 
-    )
-}
-logMessage()
 
 export default function AccountHomePage() {
     return (
