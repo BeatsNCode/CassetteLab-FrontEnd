@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
-import { UserContext,  } from '../../Contexts/userContext';
+import { UserContext } from '../../Contexts/userContext';
 
 function ResponsiveAppBar() {
 
@@ -36,7 +36,6 @@ function ResponsiveAppBar() {
 
     const userContext = React.useContext(UserContext);
     const user = userContext.user;
-    console.log(user)
 
   return (
     <AppBar position="fixed">

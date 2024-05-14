@@ -26,6 +26,7 @@ export const UserContextProvider = ({children}: UserContextProviderType) => {
     const token = localStorage.getItem("CLabLogin");
     if (token) {
       setIsAuthenticated(true);
+      console.log(token, "already authenticated")
     }
   }, []);
 
