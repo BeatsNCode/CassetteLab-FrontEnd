@@ -43,7 +43,6 @@ function login(emailAddress: FormDataEntryValue | null, Password: FormDataEntryV
   );
 }
 
-
 export default function SignIn() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -77,7 +76,6 @@ export default function SignIn() {
       }
     })
     .catch(() => alert("Could not sign you in"))
-
 
   };
 

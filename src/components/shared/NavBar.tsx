@@ -13,26 +13,28 @@ import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
 import { UserContext } from '../../Contexts/userContext';
+import signOut from '../UI/Auth/signOut';
 
 function ResponsiveAppBar() {
 
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorElUser(event.currentTarget);
-    };
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-    const handleCloseNavMenu = () => {
-      setAnchorElNav(null);
-    };
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-    const handleCloseUserMenu = () => {
-      setAnchorElUser(null);
-    };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
 
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
@@ -175,7 +177,7 @@ function ResponsiveAppBar() {
                       <Link href={`/profile`}>Profile</Link><br/><br/>
                       <Link href={`/account`}>Account</Link><br/><br/>
                       <Link href={`/dashboard`}>Dashboard</Link><br/><br/>
-                      <Link href={`/sign-out`}>Sign Out</Link>
+                      <Link onClick={signOut} href={`/`}>Sign Out</Link>
                     </Typography>
                   </MenuItem>
 
