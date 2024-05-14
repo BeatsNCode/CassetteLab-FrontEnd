@@ -35,7 +35,8 @@ function ResponsiveAppBar() {
     };
 
     const userContext = React.useContext(UserContext);
-    const user = userContext.user;
+    const loggedInUser = userContext.user;
+    console.log(loggedInUser)
 
   return (
     <AppBar position="fixed">
@@ -58,12 +59,12 @@ function ResponsiveAppBar() {
             CassetteLab
           </Typography>
  
-          {!user && (
+          {!loggedInUser && (
             <React.Fragment>
               <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
                   size="large"
-                  aria-label="account of current user"
+                  aria-label="account of current loggedInUser"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
                   onClick={handleOpenNavMenu}
@@ -119,7 +120,7 @@ function ResponsiveAppBar() {
             CassetteLab
           </Typography>
           
-          {!user && (
+          {!loggedInUser && (
             <React.Fragment>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 <Button
@@ -144,7 +145,7 @@ function ResponsiveAppBar() {
             </React.Fragment>
           )}
 
-          {user && (
+          {loggedInUser && (
             <React.Fragment>
               <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
                 <Tooltip title="Open settings">

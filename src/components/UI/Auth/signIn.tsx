@@ -65,10 +65,12 @@ export default function SignIn() {
       if (response.status === 200) {
 
         const data = response.data.user;
+        const userID = data.pk;
         const isLoggedIn = true;
 
-        userContext.setUser({ id: data.pk, isAuthenticated: isLoggedIn})
+        userContext.setUser({ id: data.pk, isLoggedIn: isLoggedIn})
         localStorage.setItem("CLabLogin", JSON.stringify(isLoggedIn))
+        localStorage.setItem("CLU", JSON.stringify(userID))
 
         navigate("/account")
 

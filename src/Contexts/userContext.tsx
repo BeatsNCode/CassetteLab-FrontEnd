@@ -1,15 +1,13 @@
 import React, { createContext } from 'react';
 
 export type AuthUser = {
-  id: number,
-  isLoggedIn: boolean
+  id: any,
+  isLoggedIn: any
 }
 
 export type UserContextType = {
   user: any;
   setUser: any;
-  isAuthenticated: boolean;
-  setIsAuthenticated: any;
 }
 
 export type UserContextProviderType = {
@@ -20,18 +18,19 @@ export const UserContext = createContext({} as UserContextType);
 
 export const UserContextProvider = ({children}: UserContextProviderType) => {
   const [user, setUser] = React.useState<AuthUser | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
   React.useEffect(() => {
-    const token = localStorage.getItem("CLabLogin");
-    if (token) {
-      setIsAuthenticated(true);
-      console.log(token, "already authenticated")
+    const token = window.localStorage.getItem("CLabLogin");
+    const id = window.localStorage.getItem("CLU");
+    if (id) {
+
+      setUser({ id: id, isLoggedIn: token })
+
     }
   }, []);
 
   return  (
-  <UserContext.Provider value={{user, setUser, isAuthenticated, setIsAuthenticated }}>
+  <UserContext.Provider value={{user, setUser }}>
     {children}
   </UserContext.Provider>
   )
