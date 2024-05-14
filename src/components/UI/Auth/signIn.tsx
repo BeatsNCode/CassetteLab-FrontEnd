@@ -61,27 +61,20 @@ export default function SignIn() {
 
     login(email, password)
     .then((response) => {
-      console.log(response)
 
       if (response.status === 200) {
 
-        console.log("Successful Log in")
+        const data = response.data.user;
+        const isLoggedIn = true;
 
-        const user = response.data.user;
-        userContext.setUser({
-          id: user.pk
-        })
+        userContext.setUser({ id: data.pk, isAuthenticated: isLoggedIn})
+        localStorage.setItem("CLabLogin", JSON.stringify(isLoggedIn))
 
         navigate("/account")
 
-      } else {
-
-        alert("Could not sign you in")
-        
       }
-
-
     })
+    .catch(() => alert("Could not sign you in"))
 
 
   };
