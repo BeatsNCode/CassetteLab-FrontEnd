@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import Homepage from './components/UI/UIHomePage.tsx';
+import Homepage from './components/UI/Pages/UIHomePage.tsx';
 import SignUp from './components/UI/Auth/signUp.tsx';
 import SignIn from './components/UI/Auth/signIn.tsx';
-import AccountHomePage from './components/UI/accountPage.tsx';
+import AccountHomePage from './components/UI/Pages/accountPage.tsx';
+import ProtectedRoute from './Contexts/protectedRoutes.tsx';
 
 
   const router = createBrowserRouter([
@@ -20,8 +21,12 @@ import AccountHomePage from './components/UI/accountPage.tsx';
     },
     {
       path: '/account',
-      element: <AccountHomePage />
-  },
+      element: (
+        <ProtectedRoute>
+          <AccountHomePage />
+        </ProtectedRoute>
+      )
+    },
   ]);
 
 export default router;

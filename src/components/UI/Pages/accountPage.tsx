@@ -1,24 +1,27 @@
+import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
 import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
 
 export default function artistRegistrationForm() {
 
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log(data)
-    
+        console.log(data.get('stageName'))
+        console.log(data.get('location'))
+        console.log(data.get('genres'))
+
+
 
     
       };
-
 
     return (
       <Container component="main" maxWidth="xs">
@@ -44,9 +47,9 @@ export default function artistRegistrationForm() {
                 required
                 fullWidth
                 id="stageName"
-                label="Band/Stage Name"
+                label="Band/Stage name"
                 name="stageName"
-                autoComplete="Band/Stage Name"
+                autoComplete="Band/Stage name"
                 autoFocus
             />
           </Grid>
@@ -68,7 +71,7 @@ export default function artistRegistrationForm() {
                 margin="normal"
                 fullWidth
                 id="genres"
-                label="Enter your Genre(s)"
+                label="Enter your genre(s)"
                 name="genres"
                 autoComplete="genres"
                 autoFocus
