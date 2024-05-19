@@ -89,9 +89,9 @@ export default function SignUp() {
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-
               <Grid item xs={12}>
                 <TextField
+                  margin="normal"
                   required
                   fullWidth
                   label="Email Address"
@@ -102,6 +102,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  margin="normal"
                   required
                   fullWidth
                   name="password"
@@ -124,6 +125,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: 2}}>
                 <TextField
+                  margin="normal"
                   required
                   fullWidth
                   name="password2"
@@ -143,7 +145,8 @@ export default function SignUp() {
                   
                   }}
                 />  
-              </Grid>
+            </Grid>
+            <Grid item xs={12}>
               <PasswordChecklist
                 rules={["minLength","specialChar","number","capital","match"]}
                 minLength={8}
@@ -153,6 +156,7 @@ export default function SignUp() {
                   setIsValid(isValid)
                 }}
               />
+            </Grid>
             </Grid>
             <Button
               type="submit"

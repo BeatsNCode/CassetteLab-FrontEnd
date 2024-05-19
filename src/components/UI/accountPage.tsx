@@ -22,10 +22,9 @@ export default function artistRegistrationForm() {
 
     return (
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
-          marginTop: 10   ,
+          marginTop: 10 ,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -50,7 +49,7 @@ export default function artistRegistrationForm() {
                 autoComplete="Band/Stage Name"
                 autoFocus
             />
-           </Grid>
+          </Grid>
           <Grid item xs={12}>
             <TextField
                 required

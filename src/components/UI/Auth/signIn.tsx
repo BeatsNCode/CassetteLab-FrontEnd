@@ -97,38 +97,44 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              type={showPassword ? "text" : "password"}
-              name="password"
-              label="Password"
-              id="password"
-              autoComplete="current-password"
-              InputProps={{endAdornment:
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  sx={{ display: 'flex'}}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-                
-              }}
-            />
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sx={{ paddingBottom: 2}}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                type={showPassword ? "text" : "password"}
+                name="password"
+                label="Password"
+                id="password"
+                autoComplete="current-password"
+                InputProps={{endAdornment:
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    sx={{ display: 'flex'}}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                  
+                }}
+              />
+            </Grid>
+            </Grid>
             <Button
               type="submit"
               fullWidth
