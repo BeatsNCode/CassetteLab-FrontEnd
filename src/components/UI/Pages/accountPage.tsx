@@ -12,7 +12,6 @@ import GenresInput from '../../shared/genresInput';
 export default function artistRegistrationForm() {
     const [genres, setGenres] = React.useState<string[]>([]);
 
-
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -20,9 +19,7 @@ export default function artistRegistrationForm() {
         console.log(data.get('location'))
         console.log(genres)
 
-
-
-    
+        
       };
 
     return (
@@ -78,7 +75,7 @@ export default function artistRegistrationForm() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             >
-            Create your artist profile
+            Create profile
           </Button>
             
         </Box>

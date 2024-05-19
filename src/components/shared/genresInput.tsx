@@ -49,7 +49,7 @@ const GenresInput: React.FC<GenresInputProps> = ({ genres, setGenres, maxEntries
         margin="normal"
         fullWidth
         id="genres"
-        label="Enter a maximum of genres"
+        label="Enter a maximum of 3 genres"
         name="genres"
         autoComplete="genres"
         autoFocus

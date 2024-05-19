@@ -15,6 +15,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PasswordChecklist from "react-password-checklist";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import withRedirectToDashboard from '../../../Contexts/userRedirect';
 
 function Copyright(props: any) {
   return (
@@ -46,7 +47,7 @@ function createAccount(emailAddress: FormDataEntryValue | null, password: FormDa
 }
 
 
-export default function SignUp() {
+function SignUp() {
   const [email, setEmail] = React.useState("")
   const navigate = useNavigate();
   const [isValid, setIsValid] = React.useState(false);
@@ -199,3 +200,5 @@ export default function SignUp() {
       </Container>
   );
 }
+
+export default withRedirectToDashboard(SignUp);

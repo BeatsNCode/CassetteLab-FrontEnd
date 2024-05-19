@@ -16,6 +16,8 @@ import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../Contexts/userContext';
+import withRedirectToDashboard from '../../../Contexts/userRedirect';
+
 
 function Copyright(props: any) {
   return (
@@ -43,7 +45,7 @@ function login(emailAddress: FormDataEntryValue | null, Password: FormDataEntryV
   );
 }
 
-export default function SignIn() {
+function SignIn() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -180,3 +182,5 @@ export default function SignIn() {
       </Container>
   );
 }
+
+export default withRedirectToDashboard(SignIn);

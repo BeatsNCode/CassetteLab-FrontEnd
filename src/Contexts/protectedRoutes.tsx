@@ -19,7 +19,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return <div>Loading...</div>; // Or a spinner component
   }
 
-  return user && user.isLoggedIn ? <>{children}</> : <Navigate to="/sign-in" />;
+  return user && user.isLoggedIn ? <>{children}</> : <Navigate to={user.isLoggedIn ? "/account" : "/sign-in"} />;
 };
 
 export default ProtectedRoute;
