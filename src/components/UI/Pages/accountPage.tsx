@@ -7,8 +7,10 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
+import GenresInput from '../../shared/genresInput';
 
 export default function artistRegistrationForm() {
+    const [genres, setGenres] = React.useState<string[]>([]);
 
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -16,7 +18,7 @@ export default function artistRegistrationForm() {
         const data = new FormData(event.currentTarget);
         console.log(data.get('stageName'))
         console.log(data.get('location'))
-        console.log(data.get('genres'))
+        console.log(genres)
 
 
 
@@ -65,17 +67,9 @@ export default function artistRegistrationForm() {
                 autoFocus
             />
           </Grid>
+
           <Grid item xs={12} sx={{ paddingBottom: 2}}>
-            <TextField
-                required
-                margin="normal"
-                fullWidth
-                id="genres"
-                label="Enter your genre(s)"
-                name="genres"
-                autoComplete="genres"
-                autoFocus
-            />
+            <GenresInput genres={genres} setGenres={setGenres} />
           </Grid>
           </Grid>
           <Button
