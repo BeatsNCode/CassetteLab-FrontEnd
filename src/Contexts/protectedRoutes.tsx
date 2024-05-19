@@ -1,11 +1,25 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { UserContext } from './userContext';
 
-const ProtectedRoute = ({}: {children: React.ReactNode}) => {
-  const { user } = React.useContext(UserContext);
+type ProtectedRouteProps = {
+  children: React.ReactNode;
+};
 
-  return user && user.isLoggedIn ? <Outlet /> : <Navigate to="/sign-in" />;
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const context = React.useContext(UserContext);
+
+  if (!context) {
+    throw new Error('ProtectedRoute must be used within a UserContextProvider');
+  }
+
+  const { user, loading } = context;
+
+  if (loading) {
+    return <div>Loading...</div>; // Or a spinner component
+  }
+
+  return user && user.isLoggedIn ? <>{children}</> : <Navigate to="/sign-in" />;
 };
 
 export default ProtectedRoute;

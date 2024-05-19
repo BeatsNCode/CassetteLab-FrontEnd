@@ -8,6 +8,7 @@ export type AuthUser = {
 export type UserContextType = {
   user: any;
   setUser: any;
+  loading: boolean;
 }
 
 export type UserContextProviderType = {
@@ -18,22 +19,34 @@ export const UserContext = createContext({} as UserContextType);
 
 export const UserContextProvider = ({children}: UserContextProviderType) => {
   const [user, setUser] = React.useState<AuthUser | null>(null);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const logString = window.localStorage.getItem("CLabLogin");
-    const clu = window.localStorage.getItem("CLU") ;
-    const loggedInBool = logString ? JSON.parse(logString) : null;
-    const id = clu ? parseInt(clu, 10) : null;
+    const fetchUser = async () => {
+      try {
+        const logString = window.localStorage.getItem("CLabLogin");
+        const clu = window.localStorage.getItem("CLU") ;
+        const loggedInBool = logString ? JSON.parse(logString) : null;
+        const id = clu ? parseInt(clu, 10) : null;
+    
+    
+        if (id !== null) {
+    
+          setUser({ id: id, isLoggedIn: loggedInBool })
+    
+        }
+      } catch (error) {
+          console.error('Failed to fetch user data', error);
+      } finally { 
+        setLoading(false)
+      }
+    };
 
-    if (id) {
-
-      setUser({ id: id, isLoggedIn: loggedInBool })
-
-    }
+    fetchUser()
   }, []);
 
   return  (
-  <UserContext.Provider value={{user, setUser }}>
+  <UserContext.Provider value={{user, setUser, loading }}>
     {children}
   </UserContext.Provider>
   )
