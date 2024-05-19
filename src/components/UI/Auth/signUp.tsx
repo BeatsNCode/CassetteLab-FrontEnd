@@ -32,8 +32,6 @@ function Copyright(props: any) {
 
 function createAccount(emailAddress: FormDataEntryValue | null, password: FormDataEntryValue | null, password2: FormDataEntryValue | null ) {
   return (
-
-    
     axios({
       method: 'post',
       url: 'http://127.0.0.1:8000/dj-rest-auth/registration/',
@@ -76,7 +74,7 @@ export default function SignUp() {
 
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -91,8 +89,7 @@ export default function SignUp() {
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required

@@ -35,7 +35,6 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
     console.log(loggedInUser)
