@@ -8,17 +8,37 @@ import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
 import GenresInput from '../../shared/genresInput';
+import axios from 'axios';
+import { UserContext } from '../../../Contexts/userContext';
+
+
+
+function createArtist(id: any, artist: any, location: any, genresList: any) {
+ return axios({
+    method: "post",
+    url: "http://127.0.0.1:8000/artist/",
+    data: { 
+      user_id: id,
+      stage_name: artist,
+      location: location,
+      genres: genresList
+    }
+  })
+}
 
 export default function artistRegistrationForm() {
     const [genres, setGenres] = React.useState<string[]>([]);
+    const userContext = React.useContext(UserContext);
+    const loggedInUser = userContext.user;
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log(data.get('stageName'))
-        console.log(data.get('location'))
-        console.log(genres)
+        const stageName = data.get('stageName')
+        const location = data.get('location')
+        
 
+        createArtist(loggedInUser.id, stageName, location, genres)
         
       };
 
