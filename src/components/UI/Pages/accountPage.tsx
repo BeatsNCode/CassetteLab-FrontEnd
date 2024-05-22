@@ -11,10 +11,8 @@ import GenresInput from '../../shared/genresInput';
 import axios from 'axios';
 import { UserContext } from '../../../Contexts/userContext';
 
-
-
-function createArtist(id: any, artist: any, location: any, genresList: any) {
- return axios({
+async function createArtist(id: any, artist: any, location: any, genresList: any, token: any) {
+ return await axios({
     method: "post",
     url: "http://127.0.0.1:8000/artist/",
     data: { 
@@ -22,14 +20,20 @@ function createArtist(id: any, artist: any, location: any, genresList: any) {
       stage_name: artist,
       location: location,
       genres: genresList
+    },
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      // CSRF Token
     }
-  })
+  });
 }
 
 export default function artistRegistrationForm() {
     const [genres, setGenres] = React.useState<string[]>([]);
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
+
+    console.log(loggedInUser)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -38,7 +42,7 @@ export default function artistRegistrationForm() {
         const location = data.get('location')
         
 
-        createArtist(loggedInUser.id, stageName, location, genres)
+        createArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken)
         
       };
 
@@ -102,3 +106,4 @@ export default function artistRegistrationForm() {
     </Box>
     </Container>  
 )};
+

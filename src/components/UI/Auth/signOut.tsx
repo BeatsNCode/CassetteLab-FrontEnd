@@ -9,6 +9,7 @@ export default function signOut() {
       .then(() => {
         localStorage.removeItem("CLU");
         localStorage.removeItem("CLabLogin");
+        localStorage.removeItem("CLToken");
       })
     );
 }

@@ -2,7 +2,8 @@ import React, { createContext } from 'react';
 
 export type AuthUser = {
   id: number,
-  isLoggedIn: boolean
+  isLoggedIn: boolean,
+  CLToken: any
 }
 
 export type UserContextType = {
@@ -27,12 +28,13 @@ export const UserContextProvider = ({children}: UserContextProviderType) => {
         const logString = window.localStorage.getItem("CLabLogin");
         const clu = window.localStorage.getItem("CLU") ;
         const loggedInBool = logString ? JSON.parse(logString) : null;
+        const token = window.localStorage.getItem("CLToken");
         const id = clu ? parseInt(clu, 10) : null;
-    
+
     
         if (id !== null) {
     
-          setUser({ id: id, isLoggedIn: loggedInBool })
+          setUser({ id: id, isLoggedIn: loggedInBool, CLToken: token })
     
         }
       } catch (error) {
