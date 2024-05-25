@@ -1,5 +1,3 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import theme from './theme';
 import { ThemeProvider,  } from '@mui/material/styles';
 import AppBar from './components/shared/NavBar.tsx';
@@ -9,7 +7,11 @@ import router from './router.tsx';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { UserContextProvider } from './Contexts/userContext.tsx';
 
+
+
 function App() { 
+
+
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React, { createContext } from 'react';
 
+
 export type AuthUser = {
   id: number,
   isLoggedIn: boolean,
@@ -35,6 +36,7 @@ export const UserContextProvider = ({children}: UserContextProviderType) => {
         if (id !== null) {
     
           setUser({ id: id, isLoggedIn: loggedInBool, CLToken: token })
+
     
         }
       } catch (error) {

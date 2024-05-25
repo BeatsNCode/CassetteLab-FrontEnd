@@ -8,30 +8,28 @@ import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
 import GenresInput from '../../shared/genresInput';
-import axios from 'axios';
 import { UserContext } from '../../../Contexts/userContext';
+import { axiosInstance } from '../../../utils/axiosInstance';
+
 
 async function createArtist(id: any, artist: any, location: any, genresList: any, token: any) {
- return await axios({
-    method: "post",
-    url: "http://127.0.0.1:8000/artist/",
-    data: { 
-      user_id: id,
+  return await axiosInstance.post("/artist/", {
+      user: id,
       stage_name: artist,
       location: location,
       genres: genresList
-    },
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      // CSRF Token
-    }
-  });
+  }, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+  })
 }
 
 export default function artistRegistrationForm() {
     const [genres, setGenres] = React.useState<string[]>([]);
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
+    
 
     console.log(loggedInUser)
 

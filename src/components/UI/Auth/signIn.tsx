@@ -18,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../Contexts/userContext';
 import withRedirectToDashboard from '../../../Contexts/userRedirect';
 
-
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -75,7 +74,6 @@ function SignIn() {
         localStorage.setItem("CLabLogin", JSON.stringify(isLoggedIn))
         localStorage.setItem("CLU", JSON.stringify(userID))
         localStorage.setItem("CLToken", token)
-
 
         navigate("/account")
 
