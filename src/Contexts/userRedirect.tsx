@@ -6,8 +6,12 @@ const withRedirectToDashboard = (Component: any) => {
   const RedirectComponent = (props: any) => {
     const { user } = useContext(UserContext);
 
-    if (user && user.isLoggedIn) {
+    if (user && user.isLoggedIn && !user.isNewUser) {
       return <Navigate to="/dashboard" />;
+    }
+
+    if (user && user.isLoggedIn && user.isNewUser) {
+      return <Navigate to="/account" />;
     }
 
     return <Component {...props} />;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Chip, Box, IconButton } from '@mui/material';
+import { TextField, Chip, Box } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
 type GenresInputProps = {

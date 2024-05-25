@@ -37,7 +37,6 @@ function ResponsiveAppBar() {
 
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
-    console.log(loggedInUser)
 
   return (
     <AppBar position="fixed">

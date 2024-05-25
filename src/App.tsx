@@ -11,8 +11,6 @@ import { UserContextProvider } from './Contexts/userContext.tsx';
 
 function App() { 
 
-
-
   return (
     <>
     <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH as string}>

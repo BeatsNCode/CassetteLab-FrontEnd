@@ -69,12 +69,19 @@ function SignIn() {
         const userID = data.pk;
         const isLoggedIn = true;
 
-        userContext.setUser({ id: data.pk, isLoggedIn: isLoggedIn, CLToken: token })
         localStorage.setItem("CLabLogin", JSON.stringify(isLoggedIn))
         localStorage.setItem("CLU", JSON.stringify(userID))
         localStorage.setItem("CLToken", token)
 
-        navigate("/account")
+        userContext.setUser({ id: data.pk, isLoggedIn: isLoggedIn, CLToken: token })
+
+        const newUser = localStorage.getItem("isNewUser");
+
+        if (newUser) {
+          navigate("/account")
+        } else {
+          navigate("/dashboard")
+        }
 
       }
     })
