@@ -4,7 +4,8 @@ import React, { createContext } from 'react';
 export type AuthUser = {
   id: number,
   isLoggedIn: boolean,
-  CLToken: any
+  CLToken: any,
+  isNewUser: boolean
 }
 
 export type UserContextType = {
@@ -31,11 +32,13 @@ export const UserContextProvider = ({children}: UserContextProviderType) => {
         const loggedInBool = logString ? JSON.parse(logString) : null;
         const token = window.localStorage.getItem("CLToken");
         const id = clu ? parseInt(clu, 10) : null;
+        const userType = window.localStorage.getItem("isNewUser");
+        const newUserBool = userType ? JSON.parse(userType) : null;
 
     
         if (id !== null) {
     
-          setUser({ id: id, isLoggedIn: loggedInBool, CLToken: token })
+          setUser({ id: id, isLoggedIn: loggedInBool, CLToken: token, isNewUser: newUserBool })
 
     
         }

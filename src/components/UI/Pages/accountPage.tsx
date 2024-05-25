@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import GenresInput from '../../shared/genresInput';
 import { UserContext } from '../../../Contexts/userContext';
 import { axiosInstance } from '../../../utils/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 
 async function createArtist(id: any, artist: any, location: any, genresList: any, token: any) {
@@ -29,9 +30,7 @@ export default function artistRegistrationForm() {
     const [genres, setGenres] = React.useState<string[]>([]);
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
-    
-
-    console.log(loggedInUser)
+    const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -41,6 +40,12 @@ export default function artistRegistrationForm() {
         
 
         createArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken)
+        .then(() => {
+          localStorage.removeItem("isNewUser");
+
+          navigate("/dashboard")
+
+        })
         
       };
 

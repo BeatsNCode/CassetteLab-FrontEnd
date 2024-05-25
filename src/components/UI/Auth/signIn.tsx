@@ -65,7 +65,6 @@ function SignIn() {
       if (response.status === 200) {
 
         const data = response.data.user;
-        console.log(response)
         const token = response.data.access
         const userID = data.pk;
         const isLoggedIn = true;

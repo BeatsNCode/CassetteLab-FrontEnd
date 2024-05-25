@@ -55,6 +55,7 @@ function SignUp() {
 	const [password2, setPassword2] = React.useState("")
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const isNewUser = true;
   
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -65,7 +66,11 @@ function SignUp() {
     /* If account cannot be created,
     Update messaging on signup form */    
     createAccount(email, password, password2)
-    .then(() => navigate('/sign-in'))
+    .then(() => {
+      localStorage.setItem("isNewUser", JSON.stringify(isNewUser))
+      navigate('/sign-in')
+
+    })
     .catch(() => alert("Could not create account"));
     
   };
