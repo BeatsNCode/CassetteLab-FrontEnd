@@ -11,7 +11,7 @@ const withRedirectToDashboard = (Component: any) => {
     }
 
     if (user && user.isLoggedIn && user.isNewUser) {
-      return <Navigate to="/account" />;
+      return <Navigate to="/artist-new" />;
     }
 
     return <Component {...props} />;

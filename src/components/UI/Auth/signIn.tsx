@@ -78,7 +78,7 @@ function SignIn() {
         const newUser = localStorage.getItem("isNewUser");
 
         if (newUser) {
-          navigate("/account")
+          navigate("/artist-new")
         } else {
           navigate("/dashboard")
         }
