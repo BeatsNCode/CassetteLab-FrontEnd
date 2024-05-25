@@ -15,9 +15,6 @@ import { useNavigate } from 'react-router-dom';
 
 // Create function to update artist details
 
-// Create function to change password
-
-// Create function to delete account
 
 export default function ArtistProfilePage() {
     const userContext = React.useContext(UserContext);
