@@ -59,7 +59,7 @@ export default function ArtistProfilePage() {
                 autoComplete="Band/Stage name"
                 helperText="Your Band/Stage name"
                 variant="standard"
-                defaultValue={artist.stage_name}
+                defaultValue={artist.stageName}
                 autoFocus
             />
           </Grid>
