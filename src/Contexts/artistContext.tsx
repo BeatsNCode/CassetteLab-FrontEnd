@@ -1,10 +1,10 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useContext, useEffect, ReactNode, useMemo } from 'react';
 import { axiosInstance } from '../utils/axiosInstance';
 import { UserContext } from './userContext';
 
 type Artist = {
   id: number;
-  stage_name: string;
+  stageName: string;
   location: string;
   genres: object;
 };
@@ -21,16 +21,21 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
   const loggedInUser = userContext?.user;
   const [artist, setArtist] = useState<Artist | null>(null);
 
-  useEffect(() => {
-    if (loggedInUser?.id && loggedInUser?.CLToken) {
+  React.useEffect(() => {
+    if (!artist && loggedInUser?.id && loggedInUser?.CLToken) {
       axiosInstance(`/artist/`, {
         headers: {
           'Authorization': `Bearer ${loggedInUser.CLToken}`
         }
       })
       .then(response => {
-        setArtist(response.data.results[0]);
-        console.log("Artist data fetched:", response.data.results[0]);
+        setArtist({
+          id: response.data.results[0].user, 
+          stageName: response.data.results[0].stage_name, 
+          location: response.data.results[0].location,
+          genres: response.data.results[0].genres 
+        });
+
       })
       .catch(error => {
         console.error("Error fetching artist data:", error);
@@ -38,8 +43,10 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [loggedInUser?.id, loggedInUser?.CLToken]);
 
+  const value = useMemo(() => ({ artist, setArtist }), [artist, setArtist]);
+
   return (
-    <ArtistContext.Provider value={{ artist, setArtist }}>
+    <ArtistContext.Provider value={value}>
       {children}
     </ArtistContext.Provider>
   );
