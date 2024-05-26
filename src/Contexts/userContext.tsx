@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useMemo } from 'react';
 
 
 export type AuthUser = {
@@ -52,8 +52,10 @@ export const UserContextProvider = ({children}: UserContextProviderType) => {
     fetchUser()
   }, []);
 
+  const contextValue = useMemo(() => ({ user, setUser, loading }), [user, loading]);
+
   return  (
-  <UserContext.Provider value={{user, setUser, loading }}>
+  <UserContext.Provider value={contextValue}>
     {children}
   </UserContext.Provider>
   )

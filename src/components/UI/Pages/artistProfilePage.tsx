@@ -9,9 +9,22 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
 import { UserContext } from '../../../Contexts/userContext';
 import { axiosInstance } from '../../../utils/axiosInstance';
-import { useNavigate } from 'react-router-dom';
 
-// Create function to fetch artist details
+type Artist = {
+  id: number;
+  stage_name: string;
+  location: string;
+  genres: object;
+}
+
+function fetchArtist(token: any) {
+  return axiosInstance(`/artist/`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+  })
+}
+
 
 // Create function to update artist details
 
@@ -19,18 +32,37 @@ import { useNavigate } from 'react-router-dom';
 export default function ArtistProfilePage() {
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
-    const navigate = useNavigate();
+    const [artist, setArtist] = React.useState<Artist | null>(null);
+
+
+    React.useEffect(() => {
+
+      if (loggedInUser?.id && loggedInUser?.CLToken) {
+       fetchArtist(loggedInUser.CLToken)
+        .then((response) => {
+          setArtist(response.data.results[0]);
+          console.log("Artist data fetched:", response.data.results[0]);
+        })
+        .catch((error) => {
+          console.error("Error fetching artist data:", error);
+        });   
+      }
+    }, [loggedInUser.id, loggedInUser.CLToken]);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const stageName = data.get('stageName')
-        const location = data.get('location')
         
-
+        // const stageName = data.get('stageName')
+        // const location = data.get('location') 
+        // const genres = data.get('genres')
+        
         
       };
 
+    if (!artist) {
+      return <Typography>Loading...</Typography>;
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -56,9 +88,11 @@ export default function ArtistProfilePage() {
                 required
                 fullWidth
                 id="stageName"
-                label="Your Band/Stage name"
                 name="stageName"
                 autoComplete="Band/Stage name"
+                helperText="Your Band/Stage name"
+                variant="standard"
+                defaultValue={artist.stage_name}
                 autoFocus
             />
           </Grid>
@@ -68,9 +102,11 @@ export default function ArtistProfilePage() {
                 margin="normal"
                 fullWidth
                 id="location"
-                label="Where you're based"
                 name="location"
                 autoComplete="location"
+                helperText="Where you're based"
+                variant="standard"
+                defaultValue={artist.location}
                 autoFocus
             />
           </Grid>
@@ -81,9 +117,11 @@ export default function ArtistProfilePage() {
                     margin="normal"
                     fullWidth
                     id="genres"
-                    label="Your genre(s)"
                     name="genres"
                     autoComplete="genres"
+                    helperText="Your genre(s)"
+                    variant="standard"
+                    defaultValue={artist.genres}
                     autoFocus
                 />
           </Grid>
