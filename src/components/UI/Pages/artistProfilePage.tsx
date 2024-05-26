@@ -7,55 +7,22 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
-import { UserContext } from '../../../Contexts/userContext';
-import { axiosInstance } from '../../../utils/axiosInstance';
+import { useArtist } from '../../../Contexts/artistContext';
 
-type Artist = {
-  id: number;
-  stage_name: string;
-  location: string;
-  genres: object;
-}
-
-function fetchArtist(token: any) {
-  return axiosInstance(`/artist/`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-  })
-}
-
-
-// Create function to update artist details
 
 
 export default function ArtistProfilePage() {
-    const userContext = React.useContext(UserContext);
-    const loggedInUser = userContext.user;
-    const [artist, setArtist] = React.useState<Artist | null>(null);
-
-
-    React.useEffect(() => {
-
-      if (loggedInUser?.id && loggedInUser?.CLToken) {
-       fetchArtist(loggedInUser.CLToken)
-        .then((response) => {
-          setArtist(response.data.results[0]);
-          console.log("Artist data fetched:", response.data.results[0]);
-        })
-        .catch((error) => {
-          console.error("Error fetching artist data:", error);
-        });   
-      }
-    }, [loggedInUser.id, loggedInUser.CLToken]);
+     const { artist } = useArtist();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         
-        // const stageName = data.get('stageName')
-        // const location = data.get('location') 
-        // const genres = data.get('genres')
+        const stageName = data.get('stageName')
+        const location = data.get('location') 
+        const genres = data.get('genres')
+
+        console.log(stageName)
         
         
       };
