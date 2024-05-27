@@ -9,27 +9,38 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
 import { useArtist } from '../../../Contexts/artistContext';
 import { Navigate } from 'react-router-dom';
+import GenresInput from '../../shared/genresUpdateInput';
+import Chip from '@mui/material/Chip';
 
 
 
 export default function ArtistProfilePage() {
-     const { artist } = useArtist();
+    const { artist } = useArtist();
+    const [genres, setGenres] = React.useState<string[]>([]);
+
+    React.useEffect(() => {
+      if (artist) {
+        setGenres(artist.genres); // Assuming artist.genres is an array of strings
+      }
+    }, [artist]);
+
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         
-        const stageName = data.get('stageName')
-        const location = data.get('location') 
-        const genres = data.get('genres')
+        // const stageName = data.get('stageName')
+        // const location = data.get('location') 
+        // const genres = data.get('genres')
 
-        console.log(stageName)
+
         
         
       };
 
     if (!artist) {
-      return <Navigate to="/artist-new" replace={true} />;
+      return <Typography>Loading...</Typography>;
+
     }
 
     return (
@@ -80,18 +91,7 @@ export default function ArtistProfilePage() {
           </Grid>
 
           <Grid item xs={12} sx={{ paddingBottom: 2}}>
-            <TextField
-                    required
-                    margin="normal"
-                    fullWidth
-                    id="genres"
-                    name="genres"
-                    autoComplete="genres"
-                    helperText="Your genre(s)"
-                    variant="standard"
-                    defaultValue={artist.genres}
-                    autoFocus
-                />
+            <GenresInput {...genres} genres={genres} setGenres={setGenres} />
           </Grid>
           </Grid>
           <Button

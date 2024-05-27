@@ -6,7 +6,7 @@ type Artist = {
   id: number;
   stageName: string;
   location: string;
-  genres: object;
+  genres: string[];
 };
 
 type ArtistContextType = {
@@ -21,7 +21,7 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
   const loggedInUser = userContext?.user;
   const [artist, setArtist] = useState<Artist | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!artist && loggedInUser?.id && loggedInUser?.CLToken) {
       axiosInstance(`/artist/`, {
         headers: {
@@ -29,13 +29,12 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
         }
       })
       .then(response => {
+        response.data.results[0]
         setArtist({
           id: response.data.results[0].user, 
           stageName: response.data.results[0].stage_name, 
           location: response.data.results[0].location,
-          genres: response.data.results[0].genres 
-        });
-
+          genres: response.data.results[0].genres});
       })
       .catch(error => {
         console.error("Error fetching artist data:", error);

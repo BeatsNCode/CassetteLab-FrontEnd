@@ -10,27 +10,19 @@ type GenresInputProps = {
 
 const GenresInput: React.FC<GenresInputProps> = ({ genres, setGenres, maxEntries = 3 }) => {
   const [inputValue, setInputValue] = useState('');
-  const inputRef = React.useRef<HTMLInputElement>(null);
-
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if ((event.key === 'Enter' || event.key === ',') && genres.length < maxEntries) {
+    if (event.key === 'Enter' && genres.length < maxEntries && inputValue.trim() !== '') {
       event.preventDefault();
-      const newGenres = inputValue.split(',').map(genre => genre.trim()).filter(genre => genre && !genres.includes(genre));
-      if (genres.length + newGenres.length <= maxEntries) {
-        setGenres([...genres, ...newGenres]);
-        setInputValue('');
+      const newGenre = inputValue.trim();
+      if (!genres.includes(newGenre)) {
+        setGenres([...genres, newGenre]);
       }
-    } else if (event.key === 'Backspace' && !inputValue && genres.length) {
-      const newGenres = genres.slice(0, -1);
-      setGenres(newGenres);
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
+      setInputValue('');
     }
   };
 
@@ -41,31 +33,33 @@ const GenresInput: React.FC<GenresInputProps> = ({ genres, setGenres, maxEntries
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <TextField
-        required
         variant="outlined"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         margin="normal"
         fullWidth
-        id="genres"
         label="Enter a maximum of 3 genres"
         name="genres"
-        autoComplete="genres"
+        autoComplete="off"
         autoFocus
+        InputProps={{
+          startAdornment: (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginBottom: 1, marginTop: 1 }}>
+              {genres.map((genre) => (
+                <Chip
+                  key={genre}
+                  label={genre}
+                  onDelete={handleDelete(genre)}
+                  deleteIcon={<CloseIcon />}
+                  variant="outlined"
+                />
+              ))}
+            </Box>
+          ),
+        }}
       />
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-        {genres.map((genre) => (
-          <Chip
-            key={genre}
-            label={genre}
-            onDelete={handleDelete(genre)}
-            deleteIcon={<CloseIcon />}
-          />
-        ))}
-      </Box>
     </Box>
-    
   );
 };
 
