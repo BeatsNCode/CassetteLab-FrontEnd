@@ -91,7 +91,6 @@ export default function artistRegistrationForm() {
                 autoFocus
             />
           </Grid>
-
           <Grid item xs={12} sx={{ paddingBottom: 2}}>
             <GenresInput genres={genres} setGenres={setGenres} />
           </Grid>

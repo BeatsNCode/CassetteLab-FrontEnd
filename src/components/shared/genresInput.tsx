@@ -33,16 +33,19 @@ const GenresInput: React.FC<GenresInputProps> = ({ genres, setGenres, maxEntries
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <TextField
+        required
+        autoFocus
         variant="outlined"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         margin="normal"
         fullWidth
+        id="genres"
         label="Enter a maximum of 3 genres"
         name="genres"
-        autoComplete="off"
-        autoFocus
+        autoComplete="genres"
+        InputLabelProps={{ shrink: false }}
         InputProps={{
           startAdornment: (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginBottom: 1, marginTop: 1 }}>

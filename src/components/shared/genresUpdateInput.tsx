@@ -47,6 +47,7 @@ const GenresUpdateInput: React.FC<GenresUpdateInputProps> = ({ genres, setGenres
         name="genres"
         autoComplete="off"
         helperText="Your Genre(s) - Max is 3."
+        InputLabelProps={{ shrink: false }}
         InputProps={{
           startAdornment: (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginBottom: 1 }}>

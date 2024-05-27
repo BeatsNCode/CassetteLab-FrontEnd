@@ -22,27 +22,39 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
   const [artist, setArtist] = useState<Artist | null>(null);
 
   useEffect(() => {
-    if (!artist && loggedInUser?.id && loggedInUser?.CLToken) {
-      axiosInstance(`/artist/`, {
-        headers: {
-          'Authorization': `Bearer ${loggedInUser.CLToken}`
-        }
-      })
-      .then(response => {
-        response.data.results[0]
-        setArtist({
-          id: response.data.results[0].user, 
-          stageName: response.data.results[0].stage_name, 
-          location: response.data.results[0].location,
-          genres: response.data.results[0].genres});
-      })
-      .catch(error => {
-        console.error("Error fetching artist data:", error);
-      });
-    }
-  }, [loggedInUser?.id, loggedInUser?.CLToken]);
+    const fetchArtist = async () => {
+      if (!loggedInUser?.id || !loggedInUser?.CLToken) return;
 
-  const value = useMemo(() => ({ artist, setArtist }), [artist, setArtist]);
+      try {
+        const response = await axiosInstance.get('/artist/', {
+          headers: {
+            'Authorization': `Bearer ${loggedInUser.CLToken}`
+          }
+        });
+
+        const artistData = response.data.results[0];
+
+        if (artistData) {
+          setArtist({
+            id: artistData.user,
+            stageName: artistData.stage_name,
+            location: artistData.location,
+            genres: artistData.genres
+          });
+        } else {
+          console.warn('No artist data found');
+          setArtist(null);
+        }
+      } catch (error) {
+        console.error('Failed to fetch artist data', error);
+        setArtist(null);
+      }
+    };
+
+    fetchArtist();
+  }, [loggedInUser]);
+
+  const value = useMemo(() => ({ artist, setArtist }), [artist]);
 
   return (
     <ArtistContext.Provider value={value}>

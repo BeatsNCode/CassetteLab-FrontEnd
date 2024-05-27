@@ -8,20 +8,34 @@ import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
 import { useArtist } from '../../../Contexts/artistContext';
-import { Navigate } from 'react-router-dom';
+import { UserContext } from '../../../Contexts/userContext';
 import GenresInput from '../../shared/genresUpdateInput';
-import Chip from '@mui/material/Chip';
+import { axiosInstance } from '../../../utils/axiosInstance';
 
 
+async function updateArtist(id: any, artist: any, location: any, genresList: any, token: any) {
+  return await axiosInstance.put("/artist/", {
+      user: id,
+      stage_name: artist,
+      location: location,
+      genres: genresList
+  }, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+  })
+}
 
 export default function ArtistProfilePage() {
     const { artist } = useArtist();
     const [genres, setGenres] = React.useState<string[]>([]);
+    const userContext = React.useContext(UserContext);
+    const loggedInUser = userContext.user;
 
     React.useEffect(() => {
       if (artist) {
-        setGenres(artist.genres); // Assuming artist.genres is an array of strings
-      }
+        setGenres(artist.genres); 
+      } 
     }, [artist]);
 
 
@@ -29,11 +43,10 @@ export default function ArtistProfilePage() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         
-        // const stageName = data.get('stageName')
-        // const location = data.get('location') 
-        // const genres = data.get('genres')
-
-
+        const stageName = data.get('stageName')
+        const location = data.get('location') 
+        
+        updateArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken)
         
         
       };
@@ -91,7 +104,7 @@ export default function ArtistProfilePage() {
           </Grid>
 
           <Grid item xs={12} sx={{ paddingBottom: 2}}>
-            <GenresInput {...genres} genres={genres} setGenres={setGenres} />
+            <GenresInput genres={genres} setGenres={setGenres} />
           </Grid>
           </Grid>
           <Button
