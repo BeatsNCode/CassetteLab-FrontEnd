@@ -8,6 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
 import { useArtist } from '../../../Contexts/artistContext';
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -28,7 +29,7 @@ export default function ArtistProfilePage() {
       };
 
     if (!artist) {
-      return <Typography>Loading...</Typography>;
+      return <Navigate to="/artist-new" replace={true} />;
     }
 
     return (
