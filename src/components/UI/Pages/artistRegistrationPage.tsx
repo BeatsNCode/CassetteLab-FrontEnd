@@ -9,6 +9,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
 import GenresInput from '../../shared/genresInput';
 import { UserContext } from '../../../Contexts/userContext';
+import { ArtistContext } from '../../../Contexts/artistContext';
 import { axiosInstance } from '../../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,24 +31,25 @@ export default function artistRegistrationForm() {
     const [genres, setGenres] = React.useState<string[]>([]);
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
+    const artistContext = React.useContext(ArtistContext);
     const navigate = useNavigate();
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const stageName = data.get('stageName')
-        const location = data.get('location')
-        
-
-        createArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken)
-        .then(() => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      const stageName = data.get('stageName') as string; // Cast to string
+      const location = data.get('location') as string; // Cast to string
+  
+      try {
+          createArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken);
           localStorage.removeItem("isNewUser");
-
-          navigate("/dashboard")
-
-        })
-        
-      };
+          artistContext?.setArtist(loggedInUser.id, stageName, location, genres);
+          navigate("/dashboard");
+      } catch (error) {
+          // Handle error here
+          console.error("Error creating artist:", error);
+      }
+  };
 
     return (
       <Container component="main" maxWidth="xs">

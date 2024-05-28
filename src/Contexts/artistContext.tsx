@@ -1,20 +1,20 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode, useMemo } from 'react';
+import { createContext, useState, useContext, useEffect, ReactNode, useMemo } from 'react';
 import { axiosInstance } from '../utils/axiosInstance';
 import { UserContext } from './userContext';
 
-type Artist = {
+export type Artist = {
   id: number;
   stageName: string;
   location: string;
   genres: string[];
 };
 
-type ArtistContextType = {
-  artist: Artist | null;
-  setArtist: React.Dispatch<React.SetStateAction<Artist | null>>;
+export type ArtistContextType = {
+  artist: any;
+  setArtist: any;
 };
 
-const ArtistContext = createContext<ArtistContextType | undefined>(undefined);
+export const ArtistContext = createContext<ArtistContextType | undefined>(undefined);
 
 export const ArtistProvider = ({ children }: { children: ReactNode }) => {
   const userContext = useContext(UserContext);
@@ -61,12 +61,4 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </ArtistContext.Provider>
   );
-};
-
-export const useArtist = (): ArtistContextType => {
-  const context = useContext(ArtistContext);
-  if (!context) {
-    throw new Error('useArtist must be used within an ArtistProvider');
-  }
-  return context;
 };

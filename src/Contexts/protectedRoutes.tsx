@@ -9,6 +9,7 @@ type ProtectedRouteProps = {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const context = React.useContext(UserContext);
 
+
   if (!context) {
     throw new Error('ProtectedRoute must be used within a UserContextProvider');
   }
@@ -18,7 +19,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   if (loading) {
     return <div>Loading...</div>; // Or a spinner component
   }
-
 
 
   return user && user.isLoggedIn ? <>{children}</> : <Navigate to={user.isLoggedIn ? "/dashboard" : "/sign-in"} />;

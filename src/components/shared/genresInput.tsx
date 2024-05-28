@@ -16,13 +16,16 @@ const GenresInput: React.FC<GenresInputProps> = ({ genres, setGenres, maxEntries
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && genres.length < maxEntries && inputValue.trim() !== '') {
+    if ((event.key === 'Enter' || event.key === ',') && genres.length < maxEntries) {
       event.preventDefault();
-      const newGenre = inputValue.trim();
-      if (!genres.includes(newGenre)) {
-        setGenres([...genres, newGenre]);
+      const newGenres = inputValue
+        .split(',')
+        .map(genre => genre.trim())
+        .filter(genre => genre && !genres.includes(genre));
+      if (genres.length + newGenres.length <= maxEntries) {
+        setGenres([...genres, ...newGenres]);
+        setInputValue('');
       }
-      setInputValue('');
     }
   };
 
@@ -45,7 +48,7 @@ const GenresInput: React.FC<GenresInputProps> = ({ genres, setGenres, maxEntries
         label="Enter a maximum of 3 genres"
         name="genres"
         autoComplete="genres"
-        InputLabelProps={{ shrink: false }}
+        InputLabelProps={{ shrink: true }}
         InputProps={{
           startAdornment: (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginBottom: 1, marginTop: 1 }}>

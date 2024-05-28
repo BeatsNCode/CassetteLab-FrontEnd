@@ -7,15 +7,14 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
-import { useArtist } from '../../../Contexts/artistContext';
+import { ArtistContext } from '../../../Contexts/artistContext';
 import { UserContext } from '../../../Contexts/userContext';
 import GenresInput from '../../shared/genresUpdateInput';
 import { axiosInstance } from '../../../utils/axiosInstance';
 
 
 async function updateArtist(id: any, artist: any, location: any, genresList: any, token: any) {
-  return await axiosInstance.put("/artist/", {
-      user: id,
+  return await axiosInstance.put(`/artists/${id}/`, {
       stage_name: artist,
       location: location,
       genres: genresList
@@ -27,15 +26,18 @@ async function updateArtist(id: any, artist: any, location: any, genresList: any
 }
 
 export default function ArtistProfilePage() {
-    const { artist } = useArtist();
     const [genres, setGenres] = React.useState<string[]>([]);
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
-
+    const artistContext = React.useContext(ArtistContext);
+    const artist = artistContext?.artist  
+  
     React.useEffect(() => {
+
       if (artist) {
         setGenres(artist.genres); 
       } 
+
     }, [artist]);
 
 
@@ -47,14 +49,15 @@ export default function ArtistProfilePage() {
         const location = data.get('location') 
         
         updateArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken)
-        
-        
-      };
+    
+  
+    };
 
     if (!artist) {
-      return <Typography>Loading...</Typography>;
-
+      return <Typography>...Loading</Typography>
     }
+
+ 
 
     return (
         <Container component="main" maxWidth="xs">
