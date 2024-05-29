@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
-import GenresInput from '../../shared/genresInput';
-import { UserContext } from '../../../Contexts/userContext';
-import { ArtistContext } from '../../../Contexts/artistContext';
-import { axiosInstance } from '../../../utils/axiosInstance';
+import GenresInput from './genresInput';
+import { UserContext } from '../../../../Contexts/userContext';
+import { ArtistContext } from '../../../../Contexts/artistContext';
+import { axiosInstance } from '../../../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
 

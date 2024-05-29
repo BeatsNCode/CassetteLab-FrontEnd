@@ -2,10 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import Homepage from './components/UI/Pages/UIHomePage.tsx';
 import SignUp from './components/UI/Auth/signUp.tsx';
 import SignIn from './components/UI/Auth/signIn.tsx';
-import AccountPage from './components/UI/Pages/accountPage.tsx';
-import ArtistRegistrationPage from './components/UI/Pages/artistRegistrationPage.tsx';
-import ArtistProfilePage from "./components/UI/Pages/artistProfilePage.tsx";
-import AccountDashboard from './components/UI/Pages/artistDashboard.tsx';
+import AccountPage from './components/UI/Pages/accountSettings/accountPage.tsx';
+import ArtistRegistrationPage from './components/UI/Pages/artistPages/artistRegistrationPage.tsx';
+import ArtistProfilePage from "./components/UI/Pages/artistPages/artistProfilePage.tsx";
+import AccountDashboard from './components/UI/Pages/artistPages/artistDashboard.tsx';
 import ProtectedRoute from './Contexts/protectedRoutes.tsx';
 
 

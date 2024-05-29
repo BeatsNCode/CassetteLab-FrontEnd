@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Grid from '@mui/material/Grid';
-import { ArtistContext } from '../../../Contexts/artistContext';
-import { UserContext } from '../../../Contexts/userContext';
-import GenresInput from '../../shared/genresUpdateInput';
-import { axiosInstance } from '../../../utils/axiosInstance';
+import { ArtistContext } from '../../../../Contexts/artistContext';
+import { UserContext } from '../../../../Contexts/userContext';
+import GenresInput from './genresUpdateInput';
+import { axiosInstance } from '../../../../utils/axiosInstance';
 
 
 async function updateArtist(id: any, artist: any, location: any, genresList: any, token: any) {
