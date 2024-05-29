@@ -2,11 +2,11 @@
 ### FrontEnd
 
 Technologies used:
-React + Typescript
-Material UI
-Web Storage API
-Google OAuth
-JWT
+- React + Typescript
+- Material UI
+- Web Storage API
+- Google OAuth
+- JWT
 
 
 #### User Stories
