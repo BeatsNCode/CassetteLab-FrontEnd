@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, useEffect, ReactNode, useMemo } from 'react';
 import { axiosInstance } from '../utils/axiosInstance';
 import { UserContext } from './userContext';
+import signOut from '../components/UI/Auth/signOut.tsx';
+
 
 export type Artist = {
   id: number;
@@ -45,8 +47,12 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
           console.warn('No artist data found');
           setArtist(null);
         }
-      } catch (error) {
-        console.error('Failed to fetch artist data', error);
+      } catch (error: any) {
+        // console.error('Failed to fetch artist data', error);
+        if (error.response.data.code === "token_not_valid") {
+          console.log("expired access token")
+          signOut()
+        }
         setArtist(null);
       }
     };
