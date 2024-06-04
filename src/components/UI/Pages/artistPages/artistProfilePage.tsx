@@ -12,63 +12,57 @@ import { UserContext } from '../../../../Contexts/userContext';
 import GenresInput from './genresUpdateInput';
 import { axiosInstance } from '../../../../utils/axiosInstance';
 
-
 async function updateArtist(id: any, artist: any, location: any, genresList: any, token: any) {
-  return await axiosInstance.put(`/artists/${id}/`, {
-      stage_name: artist,
-      location: location,
-      genres: genresList
+  return await axiosInstance.put(`/artist/${id}/`, {
+    user: id,
+    stage_name: artist,
+    location: location,
+    genres: genresList
   }, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-  })
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
 }
 
 export default function ArtistProfilePage() {
-    const [genres, setGenres] = React.useState<string[]>([]);
-    const userContext = React.useContext(UserContext);
-    const loggedInUser = userContext.user;
-    const artistContext = React.useContext(ArtistContext);
-    const artist = artistContext?.artist  
-  
-    React.useEffect(() => {
+  const [genres, setGenres] = React.useState<string[]>([]);
+  const userContext = React.useContext(UserContext);
+  const loggedInUser = userContext.user;
+  const artistContext = React.useContext(ArtistContext);
+  const artist = artistContext?.artist;
 
-      if (artist) {
-        setGenres(artist.genres); 
-      } 
-
-    }, [artist]);
-
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        
-        const stageName = data.get('stageName')
-        const location = data.get('location') 
-        
-        updateArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken)
-    
-  
-    };
-
-    if (!artist) {
-      return <Typography>...Loading</Typography>
+  React.useEffect(() => {
+    if (artist) {
+      // Set genres to an empty array if artist.genres is not an array
+      setGenres(Array.isArray(artist.genres) ? artist.genres : []);
     }
+  }, [artist]);
 
- 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
 
-    return (
-        <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-          marginTop: 10 ,
+    const stageName = data.get('stageName');
+    const location = data.get('location');
+
+    updateArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken);
+  };
+
+  if (!artist) {
+    return <Typography>...Loading</Typography>;
+  }
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 10,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
-        >
+      >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <ManageAccountsIcon />
         </Avatar>
@@ -78,7 +72,7 @@ export default function ArtistProfilePage() {
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-            <TextField
+              <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -89,10 +83,10 @@ export default function ArtistProfilePage() {
                 variant="standard"
                 defaultValue={artist.stageName}
                 autoFocus
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 required
                 margin="normal"
                 fullWidth
@@ -103,24 +97,23 @@ export default function ArtistProfilePage() {
                 variant="standard"
                 defaultValue={artist.location}
                 autoFocus
-            />
-          </Grid>
+              />
+            </Grid>
 
-          <Grid item xs={12} sx={{ paddingBottom: 2}}>
-            <GenresInput genres={genres} setGenres={setGenres} />
-          </Grid>
+            <Grid item xs={12} sx={{ paddingBottom: 2 }}>
+              <GenresInput genres={genres} setGenres={setGenres} />
+            </Grid>
           </Grid>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            >
+          >
             Save Changes
           </Button>
-            
         </Box>
-    </Box>
-    </Container>  
-    )
+      </Box>
+    </Container>
+  );
 }

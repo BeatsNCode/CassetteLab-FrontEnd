@@ -8,7 +8,7 @@ type GenresUpdateInputProps = {
   maxEntries?: number;
 };
 
-const GenresUpdateInput: React.FC<GenresUpdateInputProps> = ({ genres, setGenres, maxEntries = 3 }) => {
+const GenresUpdateInput: React.FC<GenresUpdateInputProps> = ({ genres = [], setGenres, maxEntries = 3 }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +65,6 @@ const GenresUpdateInput: React.FC<GenresUpdateInputProps> = ({ genres, setGenres
         }}
       />
     </Box>
-
   );
 };
 
