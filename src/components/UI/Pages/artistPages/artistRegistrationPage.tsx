@@ -37,8 +37,8 @@ export default function artistRegistrationForm() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
-      const stageName = data.get('stageName') as string; // Cast to string
-      const location = data.get('location') as string; // Cast to string
+      const stageName = data.get('stageName') as string; 
+      const location = data.get('location') as string; 
   
       try {
           createArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken);
@@ -46,7 +46,6 @@ export default function artistRegistrationForm() {
           artistContext?.setArtist(loggedInUser.id, stageName, location, genres);
           navigate("/dashboard");
       } catch (error) {
-          // Handle error here
           console.error("Error creating artist:", error);
       }
   };
@@ -104,8 +103,7 @@ export default function artistRegistrationForm() {
             sx={{ mt: 3, mb: 2 }}
             >
             Create profile
-          </Button>
-            
+          </Button>           
         </Box>
     </Box>
     </Container>  

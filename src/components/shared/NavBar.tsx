@@ -173,7 +173,7 @@ function ResponsiveAppBar() {
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">
                       <Link href={`/profile`}>Profile</Link><br/><br/>
-                      <Link href={`/account`}>Account</Link><br/><br/>
+                      <Link href={`/settings`}>Settings</Link><br/><br/>
                       <Link href={`/dashboard`}>Dashboard</Link><br/><br/>
                       <Link onClick={signOut} href={`/`}>Sign Out</Link>
                     </Typography>

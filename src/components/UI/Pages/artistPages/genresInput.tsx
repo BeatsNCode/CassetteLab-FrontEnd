@@ -62,7 +62,7 @@ const GenresInput: React.FC<GenresInputProps> = ({ genres, setGenres, maxEntries
                 />
               ))}
             </Box>
-          ),
+          )
         }}
       />
     </Box>

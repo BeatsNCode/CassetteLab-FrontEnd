@@ -2,10 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import Homepage from './components/UI/Pages/UIHomePage.tsx';
 import SignUp from './components/UI/Auth/signUp.tsx';
 import SignIn from './components/UI/Auth/signIn.tsx';
-import AccountPage from './components/UI/Pages/accountSettings/accountPage.tsx';
+import AccountSettingsPage from './components/UI/Pages/accountSettings/accountSettingsPage.tsx';
 import ArtistRegistrationPage from './components/UI/Pages/artistPages/artistRegistrationPage.tsx';
 import ArtistProfilePage from "./components/UI/Pages/artistPages/artistProfilePage.tsx";
-import AccountDashboard from './components/UI/Pages/artistPages/artistDashboard.tsx';
+import ArtistDashboard from './components/UI/Pages/artistPages/artistDashboard.tsx';
 import ProtectedRoute from './Contexts/protectedRoutes.tsx';
 
 
@@ -23,10 +23,10 @@ import ProtectedRoute from './Contexts/protectedRoutes.tsx';
         element: <SignIn />
     },
     {
-      path: '/account',
+      path: '/settings',
       element: (
         <ProtectedRoute>
-          <AccountPage />
+          <AccountSettingsPage />
         </ProtectedRoute>
       )
     },
@@ -50,7 +50,7 @@ import ProtectedRoute from './Contexts/protectedRoutes.tsx';
       path: '/dashboard',
       element: (
         <ProtectedRoute>
-          <AccountDashboard />
+          <ArtistDashboard />
         </ProtectedRoute>
       )
     }

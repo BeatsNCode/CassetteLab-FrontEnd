@@ -34,7 +34,6 @@ export default function ArtistProfilePage() {
 
   React.useEffect(() => {
     if (artist) {
-      // Set genres to an empty array if artist.genres is not an array
       setGenres(Array.isArray(artist.genres) ? artist.genres : []);
     }
   }, [artist]);
@@ -99,7 +98,6 @@ export default function ArtistProfilePage() {
                 autoFocus
               />
             </Grid>
-
             <Grid item xs={12} sx={{ paddingBottom: 2 }}>
               <GenresInput genres={genres} setGenres={setGenres} />
             </Grid>

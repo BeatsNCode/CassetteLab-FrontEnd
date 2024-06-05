@@ -61,7 +61,7 @@ const GenresUpdateInput: React.FC<GenresUpdateInputProps> = ({ genres = [], setG
                 />
               ))}
             </Box>
-          ),
+          )
         }}
       />
     </Box>
