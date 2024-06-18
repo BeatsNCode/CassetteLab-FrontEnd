@@ -56,11 +56,6 @@ export default function AccountSettingsPage() {
 
     return (
 
-        // Build password change form
-        // Fields to include:
-        // new_password1
-        // new_password2
-        // old_password   
         
         <Container component="main" maxWidth="xs">
             <CssBaseline />
