@@ -65,7 +65,7 @@ export default function ArtistProfilePage() {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <ManageAccountsIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{paddingBottom: 5 }}>
           Your Profile
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

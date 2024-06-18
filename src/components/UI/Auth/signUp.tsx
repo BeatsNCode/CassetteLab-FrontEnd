@@ -12,7 +12,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import PasswordChecklist from "react-password-checklist";
+import PasswordChecklist from 'react-password-checklist';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import withRedirectToDashboard from '../../../Contexts/userRedirect';

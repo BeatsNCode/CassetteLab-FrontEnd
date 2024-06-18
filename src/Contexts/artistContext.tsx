@@ -48,7 +48,6 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
           setArtist(null);
         }
       } catch (error: any) {
-        // console.error('Failed to fetch artist data', error);
         if (error.response.data.code === "token_not_valid") {
           console.log("expired access token")
           signOut()
