@@ -3,7 +3,7 @@ import { axiosInstance } from '../../../../utils/axiosInstance';
 import { UserContext } from '../../../../Contexts/userContext';
 import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, IconButton, TextField, Typography } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Copyright, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import PasswordChecklist from 'react-password-checklist';
 
@@ -79,6 +79,7 @@ export default function AccountSettingsPage() {
     return (
         <Container component="main" maxWidth="md">
             <CssBaseline />
+            <React.Fragment>
             <Box
                 sx={{
                     marginTop: 10,
@@ -86,11 +87,11 @@ export default function AccountSettingsPage() {
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}
-            >
+              >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <SettingsIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5" sx={{ margin: "auto", paddingBottom: 5 }}>
+                <Typography component="h1" variant="h5" sx={{ margin: "auto", paddingBottom: 10 }}>
                     Settings
                 </Typography>
 
@@ -100,11 +101,11 @@ export default function AccountSettingsPage() {
                     </Typography>
                 )}
 
-                <Box component="form" onSubmit={handleSubmit} noValidate>
-                    <Grid container spacing={2}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Grid container spacing={2} sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <Grid item xs={5}>
-                            <Typography component="h5" sx={{ marginBottom: 2 }}>
-                                Email:
+                            <Typography component="h5" sx={{ marginBottom: 2, mt: 1 }}>
+                                Email
                             </Typography>
                             <TextField
                                 variant="standard"
@@ -126,8 +127,123 @@ export default function AccountSettingsPage() {
                         </Grid>
 
                         <Grid item xs={6}>
-                            <Typography component="h5" sx={{ marginBottom: 2 }}>
-                                Update your Password
+                            <Typography component="h5" sx={{ marginBottom: 2, mt: 1 }}>
+                                Change Password
+                            </Typography>
+
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="current-password"
+                                label="Enter current password"
+                                type={showPassword ? "text" : "password"}
+                                onChange={e => setCurrentPassword(e.target.value)}
+                                autoComplete="current-password"
+                                InputProps={{
+                                    endAdornment:
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                }}
+                            />
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="new-password"
+                                label="Create your new password"
+                                type={showPassword ? "text" : "password"}
+                                onChange={e => setNewPassword(e.target.value)}
+                                autoComplete="new-password"
+                                InputProps={{
+                                    endAdornment:
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                }}
+                            />
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="new-password2"
+                                label="Confirm your new password"
+                                type={showPassword ? "text" : "password"}
+                                onChange={e => setNewPassword2(e.target.value)}
+                                autoComplete="new-password2"
+                                InputProps={{
+                                    endAdornment:
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                }}
+                            />
+                            <PasswordChecklist
+                                rules={["minLength", "specialChar", "number", "capital", "match"]}
+                                minLength={8}
+                                value={newPassword}
+                                valueAgain={newPassword2}
+                                onChange={(isValid: any) => {
+                                    setIsValid(isValid);
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+                    </Box>
+                    <Button
+                        type="submit"
+                        disabled={!isValid}
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Update
+                    </Button>
+
+            </Box>
+            </React.Fragment>   
+
+
+
+            <React.Fragment>
+            <Box component="form" onSubmit={handleSubmit} noValidate >
+                    <Grid container spacing={2} sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <Grid item xs={12}>
+                            <Typography component="h5" sx={{ marginBottom: 2, mt: 1, textAlign: "center" }}>
+                                Email
+                            </Typography>
+                            <TextField
+                                variant="standard"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Your Email Address"
+                                name="email"
+                                autoComplete="email"
+                                value={currentEmail}
+                                onChange={e => setCurrentEmail(e.target.value)}
+                                autoFocus
+                            />
+                        </Grid>
+
+
+                        <Grid item xs={12}>
+                            <Typography component="h5" sx={{ marginBottom: 2, mt: 5, textAlign: "center" }}>
+                                Change Password
                             </Typography>
 
                             <TextField
@@ -210,8 +326,8 @@ export default function AccountSettingsPage() {
                     >
                         Update
                     </Button>
-                </Box>
             </Box>
+            </React.Fragment>
         </Container>
     );
 }
