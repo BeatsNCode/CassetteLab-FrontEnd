@@ -21,6 +21,25 @@ async function fetchUser(token: any) {
     }
 }
 
+async function updateUserDetails(token: any, email: string, currentPassword: string, newPassword: string) {
+    try {
+        const response = await axiosInstance.patch(`/dj-rest-auth/user/`, {
+            email,
+            current_password: currentPassword,
+            new_password1: newPassword,
+            new_password2: newPassword,
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating user details:', error);
+        throw error;
+    }
+}
+
 export default function AccountSettingsPage() {
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
@@ -31,25 +50,31 @@ export default function AccountSettingsPage() {
     const [currentPassword, setCurrentPassword] = React.useState("");
     const [newPassword, setNewPassword] = React.useState("");
     const [newPassword2, setNewPassword2] = React.useState("");
+    const [feedbackMessage, setFeedbackMessage] = React.useState("");
+
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const email = data.get('email');
-        const password = data.get('password');
+        try {
+            await updateUserDetails(loggedInUser.CLToken, currentEmail, currentPassword, newPassword);
+            setFeedbackMessage("Your details have been updated successfully.");
+        } catch (error) {
+            setFeedbackMessage("An error occurred while updating your details. Please try again.");
+        }
     };
+
     React.useEffect(() => {
         if (loggedInUser) {
             fetchUser(loggedInUser.CLToken)
             .then((response: any) => {
-                setCurrentEmail(response.email)
+                setCurrentEmail(response.email);
             });
         }
-
-    })
+    }, [loggedInUser]);
 
     return (
         <Container component="main" maxWidth="md">
@@ -69,6 +94,12 @@ export default function AccountSettingsPage() {
                     Settings
                 </Typography>
 
+                {feedbackMessage && (
+                    <Typography color="error" sx={{ marginBottom: 2 }}>
+                        {feedbackMessage}
+                    </Typography>
+                )}
+
                 <Box component="form" onSubmit={handleSubmit} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={5}>
@@ -85,6 +116,7 @@ export default function AccountSettingsPage() {
                                 name="email"
                                 autoComplete="email"
                                 value={currentEmail}
+                                onChange={e => setCurrentEmail(e.target.value)}
                                 autoFocus
                             />
                         </Grid>
@@ -164,7 +196,7 @@ export default function AccountSettingsPage() {
                                 value={newPassword}
                                 valueAgain={newPassword2}
                                 onChange={(isValid: any) => {
-                                    setIsValid(isValid)
+                                    setIsValid(isValid);
                                 }}
                             />
                         </Grid>
@@ -176,11 +208,10 @@ export default function AccountSettingsPage() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign Up
+                        Update
                     </Button>
                 </Box>
             </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
     );
 }
