@@ -30,7 +30,6 @@ function Copyright(props: any) {
   );
 }
 
-
 function createAccount(emailAddress: FormDataEntryValue | null, password: FormDataEntryValue | null, password2: FormDataEntryValue | null ) {
   return (
     axios({
@@ -42,21 +41,19 @@ function createAccount(emailAddress: FormDataEntryValue | null, password: FormDa
         password2: password2
       }
     })
-    
   );
 }
-
 
 function SignUp() {
   const [email, setEmail] = React.useState("")
   const navigate = useNavigate();
   const [isValid, setIsValid] = React.useState(false);
-  const [password, setPassword] = React.useState("")
-	const [password2, setPassword2] = React.useState("")
+  const [password, setPassword] = React.useState("");
+  const [password2, setPassword2] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const isNewUser = true;
-  
+
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
@@ -67,121 +64,113 @@ function SignUp() {
     Update messaging on signup form */    
     createAccount(email, password, password2)
     .then(() => {
-      localStorage.setItem("isNewUser", JSON.stringify(isNewUser))
-      navigate('/sign-in')
-
+      localStorage.setItem("isNewUser", JSON.stringify(isNewUser));
+      navigate('/sign-in');
     })
     .catch(() => alert("Could not create account"));
-    
   };
 
   return (
-      <Container component="main" maxWidth="xs">
-
-        <Box
-          sx={{
-            marginTop: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                  onChange={e => setEmail(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type={showPassword ? "text" : "password"}
-                  onChange={e => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                  InputProps={{endAdornment:
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    sx={{ display: 'flex'}}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                  
-                  }}
-                />  
-              </Grid>
-              <Grid item xs={12} sx={{ paddingBottom: 2}}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password2"
-                  label="Re-enter Password"
-                  type={showPassword ? "text" : "password"}
-                  onChange={e => setPassword2(e.target.value)}
-                  autoComplete="current-password"
-                  InputProps={{endAdornment:
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    sx={{ display: 'flex'}}
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                  
-                  }}
-                />  
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Email Address"
+                name="email"
+                type="email"
+                onChange={e => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                onChange={e => setPassword(e.target.value)}
+                autoComplete="current-password"
+                InputProps={{
+                  endAdornment:
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      sx={{ display: 'flex'}}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                }}
+              />  
+            </Grid>
+            <Grid item xs={12} sx={{ paddingBottom: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password2"
+                label="Re-enter Password"
+                type={showPassword ? "text" : "password"}
+                onChange={e => setPassword2(e.target.value)}
+                autoComplete="current-password"
+                InputProps={{
+                  endAdornment:
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      sx={{ display: 'flex'}}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                }}
+              />  
             </Grid>
             <Grid item xs={12}>
               <PasswordChecklist
-                rules={["minLength","specialChar","number","capital","match"]}
+                rules={["minLength", "specialChar", "number", "capital", "match"]}
                 minLength={8}
                 value={password}
                 valueAgain={password2}
                 onChange={(isValid) => {
-                  setIsValid(isValid)
+                  setIsValid(isValid);
                 }}
               />
             </Grid>
+            <Grid item xs={6} sx={{ margin: "auto" }}>
+              <Button
+                type="submit"
+                disabled={!isValid}
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
             </Grid>
-            <Button
-              type="submit"
-              disabled={!isValid}
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Typography sx={{ padding: 1, textAlign: 'center' }}>OR</Typography>
-            <Box
-              sx={{
-                marginTop: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
+            <Grid item xs={12}>
+              <Typography sx={{ textAlign: 'center', mb: 2 }}>OR</Typography>
+            </Grid>
+            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
               <GoogleLogin
                 onSuccess={credentialResponse => {
                   console.log(credentialResponse);
@@ -190,19 +179,21 @@ function SignUp() {
                   console.log('Login Failed');
                 }}
               />
-            </Box>
-            <br/>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href={`/sign-in`} variant="body2">
-                  Already have an account? Sign in
-                </Link>
+            </Grid>
+            <Grid item xs={12} sx={{ mt: 1 }}>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link href={`/sign-in`} variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
               </Grid>
             </Grid>
-          </Box>
+          </Grid>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
 }
 

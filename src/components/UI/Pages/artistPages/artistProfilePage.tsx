@@ -65,7 +65,7 @@ export default function ArtistProfilePage() {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <ManageAccountsIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" sx={{paddingBottom: 10 }}>
+        <Typography component="h1" variant="h5" sx={{ paddingBottom: 10 }}>
           Your Profile
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -95,21 +95,22 @@ export default function ArtistProfilePage() {
                 helperText="Where you're based"
                 variant="standard"
                 defaultValue={artist.location}
-                autoFocus
               />
             </Grid>
             <Grid item xs={12} sx={{ paddingBottom: 2 }}>
               <GenresInput genres={genres} setGenres={setGenres} />
             </Grid>
+            <Grid item xs={6} sx={{ margin: "auto" }}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Save Changes
+              </Button>
+            </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Save Changes
-          </Button>
         </Box>
       </Box>
     </Container>

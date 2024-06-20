@@ -79,7 +79,6 @@ export default function AccountSettingsPage() {
     return (
         <Container component="main" maxWidth="md">
             <CssBaseline />
-            <React.Fragment>
             <Box
                 sx={{
                     marginTop: 10,
@@ -87,7 +86,7 @@ export default function AccountSettingsPage() {
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}
-              >
+            >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <SettingsIcon />
                 </Avatar>
@@ -101,9 +100,9 @@ export default function AccountSettingsPage() {
                     </Typography>
                 )}
 
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    <Grid container spacing={2} sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                        <Grid item xs={5}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={5}>
                             <Typography component="h5" sx={{ marginBottom: 2, mt: 1 }}>
                                 Email
                             </Typography>
@@ -122,11 +121,11 @@ export default function AccountSettingsPage() {
                             />
                         </Grid>
 
-                        <Grid item xs={1}>
+                        <Grid item xs={12} md={1}>
                             <Divider orientation="vertical" flexItem />
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <Typography component="h5" sx={{ marginBottom: 2, mt: 1 }}>
                                 Change Password
                             </Typography>
@@ -201,27 +200,23 @@ export default function AccountSettingsPage() {
                                 }}
                             />
                         </Grid>
+                        <Grid item md={3} sx={{ margin: "auto" }}>
+                            <Button
+                                type="submit"
+                                disabled={!isValid}
+                                variant="contained"
+                                fullWidth
+                                sx={{ mt: 3, mb: 2, minWidth: 200 }} // Adjusted sx prop for button size
+                            >
+                                Save Updates
+                        </Button>
+                        </Grid>
                     </Grid>
-                    </Box>
-                    <Button
-                        type="submit"
-                        disabled={!isValid}
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Update
-                    </Button>
+                </Box>
 
-            </Box>
-            </React.Fragment>   
-
-
-
-            <React.Fragment>
-            <Box component="form" onSubmit={handleSubmit} noValidate >
-                    <Grid container spacing={2} sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <Grid item xs={12}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: { xs: 'block', md: 'none' } }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={10} sx={{ margin: "auto" }}>
                             <Typography component="h5" sx={{ marginBottom: 2, mt: 1, textAlign: "center" }}>
                                 Email
                             </Typography>
@@ -240,8 +235,7 @@ export default function AccountSettingsPage() {
                             />
                         </Grid>
 
-
-                        <Grid item xs={12}>
+                        <Grid item xs={10} sx={{ margin: "auto" }}>
                             <Typography component="h5" sx={{ marginBottom: 2, mt: 5, textAlign: "center" }}>
                                 Change Password
                             </Typography>
@@ -316,18 +310,21 @@ export default function AccountSettingsPage() {
                                 }}
                             />
                         </Grid>
+
+                        <Grid item xs={4} sx={{ margin: "auto" }}>
+                            <Button
+                                type="submit"
+                                disabled={!isValid}
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Save Updates
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Button
-                        type="submit"
-                        disabled={!isValid}
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Update
-                    </Button>
+                </Box>
             </Box>
-            </React.Fragment>
         </Container>
     );
 }
