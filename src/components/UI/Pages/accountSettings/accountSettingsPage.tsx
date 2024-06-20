@@ -7,7 +7,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import PasswordChecklist from 'react-password-checklist';
 
-async function fetchUser(token: any) {
+async function fetchUser(token) {
     try {
         const response = await axiosInstance.get(`/dj-rest-auth/user/`, {
             headers: {
@@ -21,7 +21,7 @@ async function fetchUser(token: any) {
     }
 }
 
-async function updateUserDetails(token: any, email: string, currentPassword: string, newPassword: string) {
+async function updateUserDetails(token, email, currentPassword, newPassword) {
     try {
         const response = await axiosInstance.patch(`/dj-rest-auth/user/`, {
             email,
@@ -51,17 +51,26 @@ export default function AccountSettingsPage() {
     const [newPassword, setNewPassword] = React.useState("");
     const [newPassword2, setNewPassword2] = React.useState("");
     const [feedbackMessage, setFeedbackMessage] = React.useState("");
+    const [isModified, setIsModified] = React.useState(false);
+    const [initialEmail, setInitialEmail] = React.useState("");
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleMouseDownPassword = (event: any) => {
         event.preventDefault();
     };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event : any) => {
         event.preventDefault();
         try {
             await updateUserDetails(loggedInUser.CLToken, currentEmail, currentPassword, newPassword);
             setFeedbackMessage("Your details have been updated successfully.");
+            setInitialEmail(currentEmail);
+            setCurrentPassword("");
+            setNewPassword("");
+            setNewPassword2("");
+            setCurrentEmail(currentEmail); 
+            setIsValid(false); 
+            setIsModified(false); 
         } catch (error) {
             setFeedbackMessage("An error occurred while updating your details. Please try again.");
         }
@@ -70,11 +79,16 @@ export default function AccountSettingsPage() {
     React.useEffect(() => {
         if (loggedInUser) {
             fetchUser(loggedInUser.CLToken)
-            .then((response: any) => {
-                setCurrentEmail(response.email);
-            });
+                .then((response) => {
+                    setCurrentEmail(response.email);
+                    setInitialEmail(response.email);
+                });
         }
     }, [loggedInUser]);
+
+    React.useEffect(() => {
+        setIsModified(currentEmail !== initialEmail);
+    }, [currentEmail, initialEmail]);
 
     return (
         <Container component="main" maxWidth="md">
@@ -111,7 +125,7 @@ export default function AccountSettingsPage() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
+                                className="email-desktop"
                                 label="Your Email Address"
                                 name="email"
                                 autoComplete="email"
@@ -195,21 +209,19 @@ export default function AccountSettingsPage() {
                                 minLength={8}
                                 value={newPassword}
                                 valueAgain={newPassword2}
-                                onChange={(isValid: any) => {
-                                    setIsValid(isValid);
-                                }}
+                                onChange={(isValid) => setIsValid(isValid)}
                             />
                         </Grid>
                         <Grid item md={3} sx={{ margin: "auto" }}>
                             <Button
                                 type="submit"
-                                disabled={!isValid}
+                                disabled={!(isModified || isValid)}
                                 variant="contained"
                                 fullWidth
-                                sx={{ mt: 3, mb: 2, minWidth: 200 }} // Adjusted sx prop for button size
+                                sx={{ mt: 3, mb: 2, minWidth: 200 }} 
                             >
                                 Save Updates
-                        </Button>
+                            </Button>
                         </Grid>
                     </Grid>
                 </Box>
@@ -225,7 +237,7 @@ export default function AccountSettingsPage() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
+                                className="email-mobile"
                                 label="Your Email Address"
                                 name="email"
                                 autoComplete="email"
@@ -305,16 +317,14 @@ export default function AccountSettingsPage() {
                                 minLength={8}
                                 value={newPassword}
                                 valueAgain={newPassword2}
-                                onChange={(isValid: any) => {
-                                    setIsValid(isValid);
-                                }}
+                                onChange={(isValid) => setIsValid(isValid)}
                             />
                         </Grid>
 
                         <Grid item xs={4} sx={{ margin: "auto" }}>
                             <Button
                                 type="submit"
-                                disabled={!isValid}
+                                disabled={!(isValid || isModified)}
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
