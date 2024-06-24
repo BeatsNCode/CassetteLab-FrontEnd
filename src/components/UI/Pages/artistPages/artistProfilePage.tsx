@@ -31,6 +31,8 @@ export default function ArtistProfilePage() {
   const loggedInUser = userContext.user;
   const artistContext = React.useContext(ArtistContext);
   const artist = artistContext?.artist;
+  const [feedbackMessage, setFeedbackMessage] = React.useState("");
+
 
   React.useEffect(() => {
     if (artist) {
@@ -45,12 +47,22 @@ export default function ArtistProfilePage() {
     const stageName = data.get('stageName');
     const location = data.get('location');
 
-    updateArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken);
+    updateArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken)
+    .then((response) => {
+      if (response.status === 200) {
+        setFeedbackMessage("Your artist details have been updated successfully.");
+    } else {
+        setFeedbackMessage("No changes made.");
+    }
+    })
+
+
   };
 
   if (!artist) {
     return <Typography>...Loading</Typography>;
   }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -68,6 +80,13 @@ export default function ArtistProfilePage() {
         <Typography component="h1" variant="h5" sx={{ paddingBottom: 10 }}>
           Your Profile
         </Typography>
+
+        {feedbackMessage && (
+      <Typography color="error" sx={{ marginBottom: 2 }}>
+          {feedbackMessage}
+      </Typography>
+      )}
+
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>

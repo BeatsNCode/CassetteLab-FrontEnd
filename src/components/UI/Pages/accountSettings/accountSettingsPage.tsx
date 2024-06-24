@@ -21,7 +21,7 @@ async function fetchUser(token: string) {
     }
 }
 
-async function changePassword(token: string, currentPassword: string, newPassword: string) {
+async function changePassword(token: string, currentPassword: string, newPassword: string, new_password2) {
     try {
         const response = await axiosInstance.post(`/dj-rest-auth/password/change/`, {
             old_password: currentPassword,
@@ -81,7 +81,7 @@ export default function AccountSettingsPage() {
 
     try {
         if (currentEmail !== initialEmail) {
-            await updateUserDetails(loggedInUser.id, loggedInUser.CLToken, currentEmail).then((response)=> console.log(response));
+            await updateUserDetails(loggedInUser.id, loggedInUser.CLToken, currentEmail);
             updated = true;
         }
 
@@ -91,7 +91,10 @@ export default function AccountSettingsPage() {
         }
 
         if (updated) {
-            setFeedbackMessage("Your details have been updated successfully.");
+            setFeedbackMessage("Your account details have been updated successfully.");
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 1000);
         } else {
             setFeedbackMessage("No changes made.");
         }
