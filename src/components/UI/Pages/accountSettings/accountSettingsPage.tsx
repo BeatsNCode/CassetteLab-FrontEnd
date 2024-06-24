@@ -7,7 +7,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import PasswordChecklist from 'react-password-checklist';
 
-async function fetchUser(token) {
+async function fetchUser(token: string) {
     try {
         const response = await axiosInstance.get(`/dj-rest-auth/user/`, {
             headers: {
@@ -21,14 +21,30 @@ async function fetchUser(token) {
     }
 }
 
-async function updateUserDetails(token, email, currentPassword, newPassword) {
+async function changePassword(token: string, currentPassword: string, newPassword: string) {
     try {
-        const response = await axiosInstance.patch(`/dj-rest-auth/user/`, {
-            email,
-            current_password: currentPassword,
+        const response = await axiosInstance.post(`/dj-rest-auth/password/change/`, {
+            old_password: currentPassword,
             new_password1: newPassword,
             new_password2: newPassword,
-        }, {
+        },
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data
+    } catch (error) {
+        console.error('Error updating passowrd:', error)
+        throw (error);
+    }
+}
+
+async function updateUserDetails(id: any, token: string, email: string) {
+    try {
+        const response = await axiosInstance.put(`/user/update/${id}/`, { 
+            email : email
+            }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -61,20 +77,35 @@ export default function AccountSettingsPage() {
 
     const handleSubmit = async (event : any) => {
         event.preventDefault();
-        try {
-            await updateUserDetails(loggedInUser.CLToken, currentEmail, currentPassword, newPassword);
-            setFeedbackMessage("Your details have been updated successfully.");
-            setInitialEmail(currentEmail);
-            setCurrentPassword("");
-            setNewPassword("");
-            setNewPassword2("");
-            setCurrentEmail(currentEmail); 
-            setIsValid(false); 
-            setIsModified(false); 
-        } catch (error) {
-            setFeedbackMessage("An error occurred while updating your details. Please try again.");
+        let updated = false;
+
+    try {
+        if (currentEmail !== initialEmail) {
+            await updateUserDetails(loggedInUser.id, loggedInUser.CLToken, currentEmail).then((response)=> console.log(response));
+            updated = true;
         }
-    };
+
+        if (currentPassword && newPassword && newPassword2) {
+            await changePassword(loggedInUser.CLToken, currentPassword, newPassword, newPassword2);
+            updated = true;
+        }
+
+        if (updated) {
+            setFeedbackMessage("Your details have been updated successfully.");
+        } else {
+            setFeedbackMessage("No changes made.");
+        }
+
+        setInitialEmail(currentEmail);
+        setCurrentPassword("");
+        setNewPassword("");
+        setNewPassword2("");
+        setIsValid(false);
+        setIsModified(false);
+    } catch (error) {
+        setFeedbackMessage("An error occurred while updating your details. Please try again.");
+    }
+};
 
     React.useEffect(() => {
         if (loggedInUser) {
