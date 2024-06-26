@@ -84,7 +84,7 @@ export default function artistRegistrationForm() {
         </Typography>
         )}
 
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
             <TextField
@@ -114,12 +114,11 @@ export default function artistRegistrationForm() {
             <GenresInput genres={genres} setGenres={setGenres} />
           </Grid>
           </Grid>
-          <Grid item xs={6} sx={{ margin: "auto" }}>
+          <Grid item xs={6} sx={{ margin: "auto", display: "flex", justifyContent: 'center' }}>
               <Button
                 type="submit"
-                fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, minWidth: 200  }}
               >
                 Create Profile
               </Button>

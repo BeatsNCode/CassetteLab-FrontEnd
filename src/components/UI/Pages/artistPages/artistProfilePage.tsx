@@ -77,7 +77,7 @@ export default function ArtistProfilePage() {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <ManageAccountsIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" sx={{ paddingBottom: 5 }}>
+        <Typography component="h1" variant="h5">
           Your Profile
         </Typography>
 
@@ -87,7 +87,7 @@ export default function ArtistProfilePage() {
       </Typography>
       )}
 
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -116,7 +116,7 @@ export default function ArtistProfilePage() {
                 defaultValue={artist.location}
               />
             </Grid>
-            <Grid item xs={12} sx={{ paddingBottom: 2 }}>
+            <Grid item xs={12}>
               <GenresInput genres={genres} setGenres={setGenres} />
             </Grid>
             <Grid item xs={6} sx={{ margin: "auto" }}>

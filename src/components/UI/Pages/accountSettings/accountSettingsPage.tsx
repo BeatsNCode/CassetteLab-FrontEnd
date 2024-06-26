@@ -21,12 +21,12 @@ async function fetchUser(token: string) {
     }
 }
 
-async function changePassword(token: string, currentPassword: string, newPassword: string, new_password2) {
+async function changePassword(token: string, currentPassword: string, newPassword: string, newPassword2: string) {
     try {
         const response = await axiosInstance.post(`/dj-rest-auth/password/change/`, {
             old_password: currentPassword,
             new_password1: newPassword,
-            new_password2: newPassword,
+            new_password2: newPassword2,
         },
         {
             headers: {
@@ -138,7 +138,7 @@ export default function AccountSettingsPage() {
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <SettingsIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5" sx={{ margin: "auto", paddingBottom: 10 }}>
+                <Typography component="h1" variant="h5" sx={{ margin: "auto" }}>
                     Settings
                 </Typography>
 
@@ -148,7 +148,7 @@ export default function AccountSettingsPage() {
                     </Typography>
                 )}
 
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt : 3, flexGrow: 1, display: { xs: 'none', md: 'block' } }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} md={5}>
                             <Typography component="h5" sx={{ marginBottom: 2, mt: 1 }}>
@@ -254,13 +254,13 @@ export default function AccountSettingsPage() {
                                 fullWidth
                                 sx={{ mt: 3, mb: 2, minWidth: 200 }} 
                             >
-                                Save Updates
+                                Save Changes
                             </Button>
                         </Grid>
                     </Grid>
                 </Box>
 
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: { xs: 'block', md: 'none' } }}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt : 3, display: { xs: 'block', md: 'none' } }}>
                     <Grid container spacing={2}>
                         <Grid item xs={10} sx={{ margin: "auto" }}>
                             <Typography component="h5" sx={{ marginBottom: 2, mt: 1, textAlign: "center" }}>
@@ -363,7 +363,7 @@ export default function AccountSettingsPage() {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                Save Updates
+                                Save Changes
                             </Button>
                         </Grid>
                     </Grid>
