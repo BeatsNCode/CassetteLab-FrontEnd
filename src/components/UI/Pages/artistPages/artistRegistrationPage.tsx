@@ -33,21 +33,32 @@ export default function artistRegistrationForm() {
     const loggedInUser = userContext.user;
     const artistContext = React.useContext(ArtistContext);
     const navigate = useNavigate();
+    const [feedbackMessage, setFeedbackMessage] = React.useState("");
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const data = new FormData(event.currentTarget);
       const stageName = data.get('stageName') as string; 
       const location = data.get('location') as string; 
+
   
       try {
           createArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken);
           localStorage.removeItem("isNewUser");
           artistContext?.setArtist(loggedInUser.id, stageName, location, genres);
-          navigate("/dashboard");
+          setFeedbackMessage("Your artist details have been updated successfully.");
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 1000)
       } catch (error) {
+          setFeedbackMessage("No changes made.");
           console.error("Error creating artist:", error);
       }
+
+
+
+  
   };
 
     return (
@@ -66,6 +77,13 @@ export default function artistRegistrationForm() {
         <Typography component="h1" variant="h5">
           Create your artist profile
         </Typography>
+
+        {feedbackMessage && (
+        <Typography color="error" sx={{ marginBottom: 2 }}>
+            {feedbackMessage}
+        </Typography>
+        )}
+
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -96,14 +114,16 @@ export default function artistRegistrationForm() {
             <GenresInput genres={genres} setGenres={setGenres} />
           </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            >
-            Create profile
-          </Button>           
+          <Grid item xs={6} sx={{ margin: "auto" }}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Create Profile
+              </Button>
+            </Grid>        
         </Box>
     </Box>
     </Container>  
