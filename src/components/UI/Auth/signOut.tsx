@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function signOut() {
+  const navigate = useNavigate()
     return (
       axios({
         method: "post",
@@ -10,6 +12,7 @@ export default function signOut() {
         localStorage.removeItem("CLU");
         localStorage.removeItem("CLabLogin");
         localStorage.removeItem("CLToken");
+        navigate('/')
       })
     );
 }

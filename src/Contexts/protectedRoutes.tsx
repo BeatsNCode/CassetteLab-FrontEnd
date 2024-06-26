@@ -21,7 +21,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
 
-  return user && user.isLoggedIn ? <>{children}</> : <Navigate to={user.isLoggedIn ? "/dashboard" : "/sign-in"} />;
+  if (user && user.isLoggedIn) {
+    return <>{children}</>;
+  } else {
+    return <Navigate to="/sign-in" />;
+  }
 };
 
 export default ProtectedRoute;
