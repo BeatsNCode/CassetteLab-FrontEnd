@@ -4,7 +4,6 @@ import { UserContext } from '../../../../Contexts/userContext';
 import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, IconButton, TextField, Typography } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 import PasswordChecklist from 'react-password-checklist';
 
 async function fetchUser(token: string) {
@@ -59,7 +58,6 @@ async function updateUserDetails(id: any, token: string, email: string) {
 export default function AccountSettingsPage() {
     const userContext = React.useContext(UserContext);
     const loggedInUser = userContext.user;
-    const navigate = useNavigate();
     const [isValid, setIsValid] = React.useState(false);
     const [showPassword, setShowPassword] = React.useState(false);
     const [currentEmail, setCurrentEmail] = React.useState("");
@@ -92,9 +90,6 @@ export default function AccountSettingsPage() {
 
         if (updated) {
             setFeedbackMessage("Your account details have been updated successfully.");
-            setTimeout(() => {
-                navigate("/dashboard");
-            }, 1000);
         } else {
             setFeedbackMessage("No changes made.");
         }

@@ -27,42 +27,55 @@ async function updateArtist(id: any, artist: any, location: any, genresList: any
 
 export default function ArtistProfilePage() {
   const [genres, setGenres] = React.useState<string[]>([]);
+  const [initialStageName, setInitialStageName] = React.useState("");
+  const [initialLocation, setInitialLocation] = React.useState("");
+  const [initialGenres, setInitialGenres] = React.useState<string[]>([]);
+  const [stageName, setStageName] = React.useState("");
+  const [location, setLocation] = React.useState("");
+  const [isModified, setIsModified] = React.useState(false);
+  const [feedbackMessage, setFeedbackMessage] = React.useState("");
+
   const userContext = React.useContext(UserContext);
   const loggedInUser = userContext.user;
   const artistContext = React.useContext(ArtistContext);
   const artist = artistContext?.artist;
-  const [feedbackMessage, setFeedbackMessage] = React.useState("");
-
 
   React.useEffect(() => {
     if (artist) {
+      setInitialStageName(artist.stageName || "");
+      setStageName(artist.stageName || "");
+      setInitialLocation(artist.location || "");
+      setLocation(artist.location || "");
+      setInitialGenres(Array.isArray(artist.genres) ? artist.genres : []);
       setGenres(Array.isArray(artist.genres) ? artist.genres : []);
     }
   }, [artist]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  React.useEffect(() => {
+    const hasChanges = 
+      initialStageName !== stageName ||
+      initialLocation !== location ||
+      JSON.stringify(initialGenres) !== JSON.stringify(genres);
+    setIsModified(hasChanges);
+  }, [stageName, location, genres, initialStageName, initialLocation, initialGenres]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    const stageName = data.get('stageName');
-    const location = data.get('location');
-
-    updateArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken)
-    .then((response) => {
-      if (response.status === 200) {
-        setFeedbackMessage("Your artist details have been updated successfully.");
-    } else {
-        setFeedbackMessage("No changes made.");
+    try {
+      await updateArtist(loggedInUser.id, stageName, location, genres, loggedInUser.CLToken);
+      setFeedbackMessage("Your artist details have been updated successfully.");
+      setInitialStageName(stageName);
+      setInitialLocation(location);
+      setInitialGenres(genres);
+      setIsModified(false);
+    } catch (error) {
+      setFeedbackMessage("An error occurred while updating your details. Please try again.");
     }
-    })
-
-
   };
 
   if (!artist) {
     return <Typography>...Loading</Typography>;
   }
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -82,10 +95,10 @@ export default function ArtistProfilePage() {
         </Typography>
 
         {feedbackMessage && (
-      <Typography color="error" sx={{ marginBottom: 2 }}>
-          {feedbackMessage}
-      </Typography>
-      )}
+          <Typography color="error" sx={{ marginBottom: 2 }}>
+            {feedbackMessage}
+          </Typography>
+        )}
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -99,7 +112,8 @@ export default function ArtistProfilePage() {
                 autoComplete="Band/Stage name"
                 helperText="Your Band/Stage name"
                 variant="standard"
-                defaultValue={artist.stageName}
+                value={stageName}
+                onChange={(e) => setStageName(e.target.value)}
                 autoFocus
               />
             </Grid>
@@ -113,7 +127,8 @@ export default function ArtistProfilePage() {
                 autoComplete="location"
                 helperText="Where you're based"
                 variant="standard"
-                defaultValue={artist.location}
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -125,6 +140,7 @@ export default function ArtistProfilePage() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={!isModified}
               >
                 Save Changes
               </Button>
