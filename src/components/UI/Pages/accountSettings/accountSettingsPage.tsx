@@ -5,6 +5,7 @@ import { Avatar, Box, Button, Container, CssBaseline, Divider, Grid, IconButton,
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import PasswordChecklist from 'react-password-checklist';
+import changePassword from '../../Auth/changePassword';
 
 async function fetchUser(token: string) {
     try {
@@ -17,25 +18,6 @@ async function fetchUser(token: string) {
     } catch (error) {
         console.error('Error fetching user details:', error);
         throw error;
-    }
-}
-
-async function changePassword(token: string, currentPassword: string, newPassword: string, newPassword2: string) {
-    try {
-        const response = await axiosInstance.post(`/dj-rest-auth/password/change/`, {
-            old_password: currentPassword,
-            new_password1: newPassword,
-            new_password2: newPassword2,
-        },
-        {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        return response.data
-    } catch (error) {
-        console.error('Error updating passowrd:', error)
-        throw (error);
     }
 }
 
