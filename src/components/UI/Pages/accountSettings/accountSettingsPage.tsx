@@ -178,7 +178,7 @@ export default function AccountSettingsPage() {
                                 required
                                 fullWidth
                                 name="current-password"
-                                label="Enter current password"
+                                label="Enter your current password"
                                 type={showPassword ? "text" : "password"}
                                 onChange={e => setCurrentPassword(e.target.value)}
                                 autoComplete="current-password"

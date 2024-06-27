@@ -8,7 +8,6 @@ import ArtistProfilePage from "./components/UI/Pages/artistPages/artistProfilePa
 import ArtistDashboard from './components/UI/Pages/artistPages/artistDashboard.tsx';
 import ProtectedRoute from './Contexts/protectedRoutes.tsx';
 
-
   const router = createBrowserRouter([
     {
         path: '/',

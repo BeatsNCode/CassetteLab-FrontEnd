@@ -3,7 +3,6 @@ import { axiosInstance } from '../utils/axiosInstance';
 import { UserContext } from './userContext';
 import signOut from '../components/UI/Auth/signOut.tsx';
 
-
 export type Artist = {
   id: number;
   stageName: string;

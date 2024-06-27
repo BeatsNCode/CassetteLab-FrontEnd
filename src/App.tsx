@@ -8,7 +8,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { UserContextProvider } from './Contexts/userContext.tsx';
 import { ArtistProvider } from './Contexts/artistContext.tsx';
 
-
 function App() { 
 
   return (
