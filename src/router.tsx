@@ -8,6 +8,7 @@ import ArtistRegistrationPage from './components/UI/Pages/artistPages/artistRegi
 import ArtistProfilePage from "./components/UI/Pages/artistPages/artistProfilePage.tsx";
 import ArtistDashboard from './components/UI/Pages/artistPages/artistDashboard.tsx';
 import ProtectedRoute from './Contexts/protectedRoutes.tsx';
+import PasswordResetConfirm from "./components/UI/Auth/confirmPasswordReset.tsx";
 
 
   const router = createBrowserRouter([
@@ -26,6 +27,10 @@ import ProtectedRoute from './Contexts/protectedRoutes.tsx';
     {
       path: '/password-reset',
       element: <PasswordReset />
+    },
+    {
+      path: '/password-reset/confirm',
+      element: <PasswordResetConfirm />
     },
     {
       path: '/settings',

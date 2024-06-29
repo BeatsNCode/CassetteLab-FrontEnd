@@ -128,7 +128,7 @@ function SignUp() {
                 required
                 fullWidth
                 name="password2"
-                label="Re-enter Password"
+                label="Confirm Password"
                 type={showPassword ? "text" : "password"}
                 onChange={e => setPassword2(e.target.value)}
                 autoComplete="current-password"

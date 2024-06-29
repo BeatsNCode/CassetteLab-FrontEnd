@@ -7,10 +7,8 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,7 +29,7 @@ function resetPassword(emailAddress: FormDataEntryValue | null) {
   return (
     axios({
       method: "post",
-      url: "http://127.0.0.1:8000/dj-rest-auth/password/reset/",
+      url: "http://127.0.0.1:8000/api/password_reset/",
       data: {
         email: emailAddress
       }
@@ -50,10 +48,9 @@ function resetPasswordForm() {
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     
-    console.log(email)
 
-    // resetPassword(email)
-    // .then()
+    resetPassword(email)
+    // .then(() => navigate("/"))
   };
 
   return (
@@ -100,6 +97,13 @@ function resetPasswordForm() {
               >
                 Reset Password
               </Button>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs sx={{ mt: 1 }}>
+              <Link href={`/sign-in`} variant="body2">
+                Back to Sign In
+              </Link>
             </Grid>
           </Grid>
         </Box>
