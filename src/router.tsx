@@ -29,7 +29,7 @@ import PasswordResetConfirm from "./components/UI/Auth/confirmPasswordReset.tsx"
       element: <PasswordReset />
     },
     {
-      path: '/password-reset/confirm',
+      path: '/password-reset/confirm/',
       element: <PasswordResetConfirm />
     },
     {

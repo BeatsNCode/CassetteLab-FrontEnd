@@ -29,11 +29,11 @@ function Copyright(props: any) {
   );
 }
 
-function resetPassword(token: FormDataEntryValue | null, password: FormDataEntryValue | null) {
+function resetPassword(token: any, password: FormDataEntryValue | undefined) {
   return (
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:8000/dj-rest-auth/registration/',
+      url: 'http://127.0.0.1:8000/api/password_reset/confirm/',
       data: {
         token: token,
         password: password
@@ -43,7 +43,9 @@ function resetPassword(token: FormDataEntryValue | null, password: FormDataEntry
 }
 
 export default function PasswordResetConfirm() {
-
+  const queryParams = new URLSearchParams(location.search);
+  const tokenString = queryParams.get('token') || '';
+  const token = parseInt(tokenString, 10);    
   const navigate = useNavigate();
   const [isValid, setIsValid] = React.useState(false);
   const [password, setPassword] = React.useState("");
@@ -59,7 +61,7 @@ export default function PasswordResetConfirm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    resetPassword(password, password2)
+    resetPassword(token, password)
     .then(() => {
       navigate('/sign-in');
     })
@@ -80,7 +82,7 @@ export default function PasswordResetConfirm() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5" sx={{ textAlign: 'center'}}>
-          Create your new password
+          Reset password
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={1}>
