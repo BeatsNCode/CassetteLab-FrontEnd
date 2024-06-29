@@ -72,6 +72,10 @@ export default function AccountSettingsPage() {
 
         if (updated) {
             setFeedbackMessage("Your account details have been updated successfully.");
+            setTimeout(() => {
+                window.location.reload();
+            }, 300)
+
         } else {
             setFeedbackMessage("No changes made.");
         }
