@@ -25,11 +25,11 @@ import PasswordResetConfirm from "./components/UI/Auth/confirmPasswordReset.tsx"
         element: <SignIn />
     },
     {
-      path: '/password-reset',
+      path: '/forgot-password',
       element: <PasswordReset />
     },
     {
-      path: '/password-reset/confirm/',
+      path: '/password-reset/confirm',
       element: <PasswordResetConfirm />
     },
     {

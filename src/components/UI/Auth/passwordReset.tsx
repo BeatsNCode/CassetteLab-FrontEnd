@@ -26,31 +26,28 @@ function Copyright(props: any) {
 }
 
 function resetPassword(emailAddress: FormDataEntryValue | null) {
-  return (
-    axios({
-      method: "post",
-      url: "http://127.0.0.1:8000/api/password_reset/",
-      data: {
-        email: emailAddress
-      }
-    })
-  );
+  return axios({
+    method: "post",
+    url: "http://127.0.0.1:8000/api/password_reset/",
+    data: {
+      email: emailAddress,
+    },
+  });
 }
 
-function resetPasswordForm() {
+function ResetPasswordForm() {
   const navigate = useNavigate();
   const [email, setEmail] = React.useState('');
-
- 
+  const [formSubmitted, setFormSubmitted] = React.useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
-    
 
     resetPassword(email)
-    // .then(() => navigate("/"))
+      .then(() => setFormSubmitted(true))
+      .catch(() => alert("Could not send reset password email"));
   };
 
   return (
@@ -70,47 +67,53 @@ function resetPasswordForm() {
         <Typography component="h1" variant="h5">
           Forgot password
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                type="email"
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+        {formSubmitted ? (
+          <Typography sx={{ mt: 3, textAlign: 'center' }}>
+            Please check your email for further instructions.
+          </Typography>
+        ) : (
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  type="email"
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6} sx={{ margin: "auto" }}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 1 }}
+                  disabled={!email}
+                >
+                  Reset Password
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={6} sx={{ margin: "auto" }}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 1 }}
-                disabled={!email}
-              >
-                Reset Password
-              </Button>
+            <Grid container>
+              <Grid item xs sx={{ mt: 1 }}>
+                <Link href={`/sign-in`} variant="body2">
+                  Back to Sign In
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item xs sx={{ mt: 1 }}>
-              <Link href={`/sign-in`} variant="body2">
-                Back to Sign In
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        )}
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 }
 
-export default resetPasswordForm;
+export default ResetPasswordForm;
