@@ -2,6 +2,7 @@ import * as React from "react";
 import { Container, Box, Avatar, Typography, Grid, TextField, Button } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import { ArtistContext } from '../../../../Contexts/artistContext';
+import SideMenu from "../../../shared/SideMenu";
 
 
 export default function dashboard() {
@@ -11,6 +12,7 @@ export default function dashboard() {
     return (
 
      <Container component="main" maxWidth="xs">
+      <SideMenu/>
       <Box
         sx={{
           marginTop: 10,
