@@ -12,13 +12,17 @@ export default function dashboard() {
     return (
 
      <Container component="main" maxWidth="xs">
-      <SideMenu/>
+      <SideMenu mobileOpen={false} handleDrawerToggle={function (): void {
+          throw new Error("Function not implemented.");
+        } }/>
       <Box
         sx={{
+          flexGrow: 1,
           marginTop: 10,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          ml: { xs: 0, md: 2 }
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

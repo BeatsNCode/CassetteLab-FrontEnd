@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 
 interface SideMenuProps {
   mobileOpen: boolean;
@@ -8,31 +8,31 @@ interface SideMenuProps {
 
 const SideMenu: React.FC<SideMenuProps> = ({ mobileOpen, handleDrawerToggle }) => {
   const drawer = (
-    <Box sx={{ textAlign: 'center' }}>
-      <List>
-        <ListItem button component="a" href="/dashboard">
+    <Box sx={{ textAlign: 'center', marginTop: -1 }}>
+      <List >
+        <ListItemButton sx={{ paddingBottom: 2, paddingTop: 2 }} component="a" href="/dashboard">
           <ListItemText primary="Dashboard" />
-        </ListItem>
-        <ListItem button component="a" href="/fans">
-          <ListItemText primary="Fans" />
-        </ListItem>
-        <ListItem button component="a" href="/music">
+        </ListItemButton>
+        <ListItemButton sx={{ paddingBottom: 2, paddingTop: 2 }} component="a" href="/music">
           <ListItemText primary="Music" />
-        </ListItem>
-        <ListItem button component="a" href="/cassettes">
+        </ListItemButton>
+        <ListItemButton sx={{ paddingBottom: 2, paddingTop: 2 }} component="a" href="/cassettes">
           <ListItemText primary="Cassettes" />
-        </ListItem>
+        </ListItemButton>
+        <ListItemButton sx={{ paddingBottom: 2, paddingTop: 2 }} component="a" href="/fans">
+          <ListItemText primary="Fans" />
+        </ListItemButton>
       </List>
     </Box>
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }} >
       <Drawer
         variant="permanent"
         sx={{
           display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 180, top: 64 },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 170, top: 64 },
         }}
         open
       >
