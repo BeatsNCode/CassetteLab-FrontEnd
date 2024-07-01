@@ -1,17 +1,12 @@
-import * as React from 'react';
-import { Box, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Box, Drawer, List, ListItemButton, ListItemText } from '@mui/material';
 
-interface SideMenuProps {
-  mobileOpen: boolean;
-  handleDrawerToggle: () => void;
-}
 
-const SideMenu: React.FC<SideMenuProps> = ({ mobileOpen, handleDrawerToggle }) => {
+export default function SideMenu() {
   const drawer = (
     <Box sx={{ textAlign: 'center', marginTop: -1 }}>
       <List >
         <ListItemButton sx={{ paddingBottom: 2, paddingTop: 2 }} component="a" href="/dashboard">
-          <ListItemText primary="Dashboard" />
+          <ListItemText primary="Home" />
         </ListItemButton>
         <ListItemButton sx={{ paddingBottom: 2, paddingTop: 2 }} component="a" href="/music">
           <ListItemText primary="Music" />
@@ -38,22 +33,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ mobileOpen, handleDrawerToggle }) =
       >
         {drawer}
       </Drawer>
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 180 },
-        }}
-      >
-        {drawer}
-      </Drawer>
     </Box>
   );
 };
 
-export default SideMenu;

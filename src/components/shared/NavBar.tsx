@@ -14,6 +14,7 @@ import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
 import { UserContext } from '../../Contexts/userContext';
 import signOut from '../UI/Auth/signOut';
+import SideMenu from './SideMenu';
 
 function ResponsiveAppBar() {
 
@@ -53,11 +54,55 @@ function ResponsiveAppBar() {
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
-              textDecoration: 'none',
+              textDecoration: 'none'
             }}
           >
             CassetteLab
           </Typography>
+          
+          {loggedInUser && (
+            <React.Fragment>
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current loggedInUser"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', md: 'none' },
+                  }}
+                >
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">
+                    <Link href={`/dashboard`}>Home</Link><br/><br/>
+                    <Link href={`/music`}>Music</Link><br/><br/>
+                    <Link href={`/cassettes`}>Cassettes</Link><br/><br/>
+                    <Link href={`/fans`}>Fans</Link>
+                  </Typography>
+                </MenuItem>
+                </Menu>
+              </Box>
+            </React.Fragment>
+          )}
  
           {!loggedInUser && (
             <React.Fragment>
@@ -101,7 +146,7 @@ function ResponsiveAppBar() {
               </Box>
             </React.Fragment>
           )}
-  
+          <Box sx= {{ margin: 'auto'}}>
           <Typography
             variant="h5"
             noWrap
@@ -114,11 +159,12 @@ function ResponsiveAppBar() {
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
-              textDecoration: 'none',
+              textDecoration: 'none'
             }}
           >
             CassetteLab
           </Typography>
+          </Box>
           
           {!loggedInUser && (
             <React.Fragment>
@@ -172,9 +218,9 @@ function ResponsiveAppBar() {
                 >
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">
+                      <Link href={`/dashboard`}>Dashboard</Link><br/><br/>
                       <Link href={`/profile`}>Profile</Link><br/><br/>
                       <Link href={`/settings`}>Settings</Link><br/><br/>
-                      <Link href={`/dashboard`}>Dashboard</Link><br/><br/>
                       <Link onClick={signOut} href={`/`}>Sign Out</Link>
                     </Typography>
                   </MenuItem>
